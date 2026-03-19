@@ -34,17 +34,17 @@ body {
 /* Inline edit inputs */
 .inline-edit-input {
   background: white;
-  border: 2px solid var(--color-bronze);
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 0.8125rem;
+  border: 1.5px solid var(--color-bronze);
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 10px;
   width: 100%;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(158, 135, 93, 0.15);
-  transition: all 0.2s ease;
+  box-shadow: 0 0 0 2px rgba(158, 135, 93, 0.12);
+  transition: all 0.15s ease;
 }
 .inline-edit-input:focus {
-  box-shadow: 0 0 0 4px rgba(158, 135, 93, 0.3);
+  box-shadow: 0 0 0 3px rgba(158, 135, 93, 0.25);
   border-color: var(--color-bronze-dark);
 }
 
@@ -135,21 +135,20 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 32px;
-  height: 32px;
-  padding: 0 6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
   font-family: var(--font-numbers);
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   color: #5a4a2e;
   background: linear-gradient(145deg, #f5eedd 0%, #e8dcc5 100%);
-  border-radius: 10px;
+  border-radius: 6px;
   border: 1px solid rgba(158, 135, 93, 0.25);
   box-shadow:
-    0 2px 4px rgba(158, 135, 93, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+    0 1px 2px rgba(158, 135, 93, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   letter-spacing: -0.02em;
 }
 
@@ -217,24 +216,22 @@ body {
 /* Expanded detail cards */
 .expanded-card {
   background: rgba(255, 255, 255, 0.7);
-  border-radius: 12px;
-  padding: 14px 16px;
+  border-radius: 8px;
+  padding: 8px 10px;
   border: 1px solid rgba(158, 135, 93, 0.1);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 3px;
 }
 .expanded-card-title {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding-bottom: 6px;
+  padding-bottom: 4px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 /* Totals row */

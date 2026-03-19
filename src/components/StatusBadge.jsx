@@ -22,19 +22,19 @@ export default function StatusBadge({ status, size = 'sm' }) {
   const tooltip = STATUS_TOOLTIPS[status] || status
 
   const sizeClasses = size === 'sm'
-    ? 'text-[10px] px-2 py-0.5'
-    : 'text-xs px-3 py-1'
+    ? 'text-[8px] px-1.5 py-0'
+    : 'text-[10px] px-2 py-0.5'
 
   return (
     <Tooltip content={tooltip}>
       <span
-        className={`status-badge inline-flex items-center gap-1 rounded-full text-white font-semibold whitespace-nowrap ${sizeClasses}`}
+        className={`status-badge inline-flex items-center gap-0.5 rounded-full text-white font-semibold whitespace-nowrap leading-relaxed ${sizeClasses}`}
         style={{
           backgroundColor: color,
-          boxShadow: `0 2px 8px ${color}40`,
+          boxShadow: `0 1px 4px ${color}30`,
         }}
       >
-        <span className="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+        <span className="w-1 h-1 rounded-full bg-white/40"></span>
         {status}
       </span>
     </Tooltip>
