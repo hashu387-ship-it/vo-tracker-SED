@@ -87,6 +87,32 @@ body {
   animation: pulse-glow 2s infinite;
 }
 
+/* 3D table grid cells */
+.table-3d td {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-right-color: rgba(0, 0, 0, 0.1);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.7);
+  border-top-color: rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.04);
+}
+.table-3d th {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-right-color: rgba(0, 0, 0, 0.12);
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+  border-left-color: rgba(255, 255, 255, 0.6);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.4),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.table-3d thead th {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
 /* Table row hover */
 .table-row-hover {
   transition: all 0.15s ease;
@@ -94,6 +120,13 @@ body {
 .table-row-hover:hover {
   transform: translateX(2px);
   box-shadow: -4px 0 0 0 var(--color-bronze);
+}
+.table-row-hover:hover td {
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.7),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(158, 135, 93, 0.1);
+  border-bottom-color: rgba(158, 135, 93, 0.2);
 }
 
 /* Column group headers */

@@ -24,7 +24,7 @@ const COLUMN_GROUPS = [
     columns: [
       { key: 'no', label: '#', width: 'w-10', editable: false },
       { key: 'vo_ref', label: 'VO Ref', width: 'w-20', editable: true },
-      { key: 'description', label: 'Description', width: 'min-w-[180px] max-w-[220px]', editable: true },
+      { key: 'description', label: 'Description', width: 'min-w-[320px] max-w-[450px]', editable: true },
       { key: 'rsg_status', label: 'Status', width: 'w-36', editable: true },
       { key: 'action_by', label: 'Action', width: 'w-20', editable: true },
     ]
@@ -331,7 +331,7 @@ export default function VariationRegister() {
       {/* Table */}
       <div className="glass rounded-2xl shadow-lg border border-[#EDE6D3] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-sm table-3d border-collapse">
             {/* Column group headers */}
             <thead className="sticky top-0 z-20">
               <tr>
