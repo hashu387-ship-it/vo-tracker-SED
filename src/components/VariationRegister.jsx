@@ -35,8 +35,7 @@ const COLUMN_GROUPS = [
     color: 'col-group-ffc',
     dotColor: 'bg-emerald-500',
     columns: [
-      { key: 'ffc_revised_submission', label: 'Revised', width: 'w-28', amount: true, editable: true },
-      { key: 'ffc_initial_submission', label: 'Initial', width: 'w-28', amount: true, editable: true },
+      { key: 'ffc_submission', label: 'Initial / Revised', width: 'w-36', combined: true, editable: false },
       { key: 'ffc_summary', label: 'Summary', width: 'w-28', amount: true, editable: true },
     ]
   },
@@ -138,6 +137,9 @@ export default function VariationRegister() {
     ALL_COLUMNS.filter(c => c.amount).forEach(c => {
       t[c.key] = sorted.reduce((s, v) => s + (Number(v[c.key]) || 0), 0)
     })
+    // Combined column totals
+    t.ffc_initial_submission = sorted.reduce((s, v) => s + (Number(v.ffc_initial_submission) || 0), 0)
+    t.ffc_revised_submission = sorted.reduce((s, v) => s + (Number(v.ffc_revised_submission) || 0), 0)
     return t
   }, [sorted])
 
@@ -397,7 +399,7 @@ export default function VariationRegister() {
               ) : (
                 sorted.map((v, idx) => {
                   const isExpanded = expandedRow === v.id
-                  const ffcCols = new Set(['ffc_revised_submission', 'ffc_initial_submission', 'ffc_summary', 'ffc_target_date'])
+                  const ffcCols = new Set(['ffc_submission', 'ffc_summary', 'ffc_target_date'])
                   const rsgCols = new Set(['rsg_assessment', 'to_summary', 'approved_on_account', 'rsg_target_date'])
 
                   return (
@@ -420,7 +422,28 @@ export default function VariationRegister() {
 
                           return (
                             <td key={col.key} className={`px-3 py-2.5 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
-                              {col.editable ? (
+                              {col.combined ? (
+                                /* Combined Initial / Revised column */
+                                <div className="flex flex-col gap-0.5 text-right" onClick={(e) => e.stopPropagation()}>
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="text-[9px] text-gray-400 uppercase font-medium">Init</span>
+                                    <InlineEdit
+                                      value={v.ffc_initial_submission}
+                                      field="ffc_initial_submission"
+                                      onSave={(field, newValue) => handleSave(v.id, field, newValue)}
+                                    />
+                                  </div>
+                                  <div className="border-t border-dashed border-gray-200"></div>
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="text-[9px] text-emerald-500 uppercase font-semibold">Rev</span>
+                                    <InlineEdit
+                                      value={v.ffc_revised_submission}
+                                      field="ffc_revised_submission"
+                                      onSave={(field, newValue) => handleSave(v.id, field, newValue)}
+                                    />
+                                  </div>
+                                </div>
+                              ) : col.editable ? (
                                 <InlineEdit
                                   value={v[col.key]}
                                   field={col.key}
@@ -533,8 +556,24 @@ export default function VariationRegister() {
                     if (firstGroupCols.findIndex(c => c.key === col.key) > 0) return null
 
                     return (
-                      <td key={col.key} className={`px-3 py-3.5 text-xs ${col.amount ? 'text-right font-mono' : ''}`}>
-                        {col.amount ? (
+                      <td key={col.key} className={`px-3 py-3.5 text-xs ${(col.amount || col.combined) ? 'text-right font-mono' : ''}`}>
+                        {col.combined ? (
+                          <div className="flex flex-col gap-0.5 text-right">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[9px] text-gray-400 font-medium">Init</span>
+                              <span className={`font-black text-[12px] ${isNegative(totals.ffc_initial_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                                {formatAmount(totals.ffc_initial_submission)}
+                              </span>
+                            </div>
+                            <div className="border-t border-dashed border-gray-300"></div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-[9px] text-emerald-600 font-semibold">Rev</span>
+                              <span className={`font-black text-[12px] ${isNegative(totals.ffc_revised_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                                {formatAmount(totals.ffc_revised_submission)}
+                              </span>
+                            </div>
+                          </div>
+                        ) : col.amount ? (
                           <Tooltip content={`Total: SAR ${formatAmount(totals[col.key])}`}>
                             <span className={`font-black text-[13px] ${isNegative(totals[col.key]) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                               {formatAmount(totals[col.key])}
