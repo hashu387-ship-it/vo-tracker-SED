@@ -29,7 +29,8 @@ const FIELD_TOOLTIPS = {
   vo_ref: 'Variation Order reference number',
 }
 
-export default function InlineEdit({ value, field, onSave }) {
+export default function InlineEdit({ value, field, onSave, onClick }) {
+  const stopProp = (e) => e.stopPropagation()
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(value)
   const [saving, setSaving] = useState(false)
@@ -77,7 +78,7 @@ export default function InlineEdit({ value, field, onSave }) {
     // Display mode
     if (field === 'rsg_status') {
       return (
-        <div onClick={() => setEditing(true)} className="cursor-pointer group relative">
+        <div onClick={(e) => { stopProp(e); setEditing(true) }} className="cursor-pointer group relative">
           <StatusBadge status={value} />
           <span className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <Pencil size={10} className="text-[#9E875D]" />
@@ -90,7 +91,7 @@ export default function InlineEdit({ value, field, onSave }) {
       return (
         <Tooltip content={tooltip}>
           <div
-            onClick={() => setEditing(true)}
+            onClick={(e) => { stopProp(e); setEditing(true) }}
             className={`cursor-pointer text-right font-mono text-xs whitespace-nowrap px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
           >
             {formatAmount(value)}
@@ -107,7 +108,7 @@ export default function InlineEdit({ value, field, onSave }) {
       }
       return (
         <Tooltip content={tooltip}>
-          <div onClick={() => setEditing(true)} className="cursor-pointer group relative">
+          <div onClick={(e) => { stopProp(e); setEditing(true) }} className="cursor-pointer group relative">
             {value ? (
               <span className={`inline-block text-[10px] px-2 py-0.5 rounded-md font-semibold border ${colors[value] || 'bg-gray-100 text-gray-500 border-gray-200'}`}>
                 {value}
@@ -125,7 +126,7 @@ export default function InlineEdit({ value, field, onSave }) {
       return (
         <Tooltip content={`${tooltip}${isOverdue ? '\n⚠️ OVERDUE' : ''}`}>
           <div
-            onClick={() => setEditing(true)}
+            onClick={(e) => { stopProp(e); setEditing(true) }}
             className={`cursor-pointer text-xs whitespace-nowrap px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${
               isOverdue ? 'text-red-500 font-semibold bg-red-50' : ''
             }`}
@@ -141,7 +142,7 @@ export default function InlineEdit({ value, field, onSave }) {
     return (
       <Tooltip content={value ? `${tooltip}\n\n${value}` : tooltip}>
         <div
-          onClick={() => setEditing(true)}
+          onClick={(e) => { stopProp(e); setEditing(true) }}
           className={`cursor-pointer text-xs px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${isDescription ? '' : 'max-w-[220px]'}`}
         >
           <span className={isDescription ? 'line-clamp-3 text-[13px] leading-snug font-medium text-gray-800' : 'line-clamp-2'}>{value || <span className="text-gray-300">—</span>}</span>
