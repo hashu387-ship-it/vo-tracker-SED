@@ -3,31 +3,152 @@
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --color-bronze: #9E875D;
+  --color-bronze-light: #b8a57a;
+  --color-bronze-dark: #7a6844;
   --color-charcoal: #2D3436;
   --color-cream: #F5F3EE;
   --color-tan: #EDE6D3;
+  --color-rsg-blue: #1a3a5c;
+  --color-ffc-green: #1a4a3a;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-bronze) var(--color-cream);
 }
 
 body {
   font-family: var(--font-sans);
   color: var(--color-charcoal);
+  background: linear-gradient(135deg, #F5F3EE 0%, #ebe5d5 50%, #F5F3EE 100%);
+  min-height: 100vh;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { height: 8px; width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-cream); }
-::-webkit-scrollbar-thumb { background: var(--color-bronze); border-radius: 4px; }
+::-webkit-scrollbar { height: 6px; width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-cream); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-bronze); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-bronze-dark); }
 
 /* Inline edit inputs */
 .inline-edit-input {
   background: white;
   border: 2px solid var(--color-bronze);
-  border-radius: 4px;
-  padding: 2px 6px;
+  border-radius: 6px;
+  padding: 4px 8px;
   font-size: 0.8125rem;
   width: 100%;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(158, 135, 93, 0.15);
+  transition: all 0.2s ease;
 }
 .inline-edit-input:focus {
-  box-shadow: 0 0 0 2px rgba(158, 135, 93, 0.3);
+  box-shadow: 0 0 0 4px rgba(158, 135, 93, 0.3);
+  border-color: var(--color-bronze-dark);
+}
+
+/* Tooltip styles */
+.tooltip-container {
+  z-index: 9999;
+  pointer-events: none;
+}
+.tooltip-box {
+  background: #1a1a2e;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.tooltip-arrow {
+  fill: #1a1a2e;
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #ede6d3 25%, #f5f0e5 50%, #ede6d3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Pulse glow for action items */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 152, 0, 0); }
+}
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Table row hover */
+.table-row-hover {
+  transition: all 0.15s ease;
+}
+.table-row-hover:hover {
+  transform: translateX(2px);
+  box-shadow: -4px 0 0 0 var(--color-bronze);
+}
+
+/* Column group headers */
+.col-group-ffc {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-bottom: 3px solid #2e7d32;
+}
+.col-group-rsg {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-bottom: 3px solid #1565c0;
+}
+.col-group-general {
+  background: linear-gradient(135deg, #EDE6D3 0%, #ddd4bf 100%);
+  border-bottom: 3px solid var(--color-bronze);
+}
+
+/* Number ticker animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-up {
+  animation: countUp 0.5s ease-out forwards;
+}
+
+/* Status badge hover effect */
+.status-badge {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.status-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Print styles */
+@media print {
+  body { background: white !important; }
+  .no-print { display: none !important; }
+  .print-break { page-break-before: always; }
 }
