@@ -154,7 +154,7 @@ export default function SummaryTables() {
                           <span className="text-xs font-semibold bg-gray-100 px-2 py-0.5 rounded-full">{summary[status][cid].count}</span>
                         )}
                       </td>
-                      <td className={`px-4 py-3 text-right text-xs font-mono ${isNegative(summary[status][cid].amount) ? 'text-red-500 font-semibold' : 'text-gray-700'}`}>
+                      <td className={`px-4 py-3 text-right text-xs font-numbers ${isNegative(summary[status][cid].amount) ? 'text-red-500 font-semibold' : 'text-gray-700'}`}>
                         {summary[status][cid].count > 0 ? formatAmount(summary[status][cid].amount) : ''}
                       </td>
                     </React.Fragment>
@@ -162,7 +162,7 @@ export default function SummaryTables() {
                   <td className="px-4 py-3 text-center border-l border-gray-100">
                     <span className="text-xs font-bold bg-[#9E875D]/10 text-[#9E875D] px-2.5 py-0.5 rounded-full">{summary[status].totalCount}</span>
                   </td>
-                  <td className={`px-4 py-3 text-right text-xs font-mono font-bold ${isNegative(summary[status].totalAmount) ? 'text-red-500' : 'text-[#2D3436]'}`}>
+                  <td className={`px-4 py-3 text-right text-xs font-numbers font-bold ${isNegative(summary[status].totalAmount) ? 'text-red-500' : 'text-[#2D3436]'}`}>
                     {formatAmount(summary[status].totalAmount)}
                   </td>
                 </motion.tr>
@@ -175,7 +175,7 @@ export default function SummaryTables() {
                     <td className="px-4 py-4 text-center">
                       <span className="text-xs font-bold">{grandTotals[cid].count}</span>
                     </td>
-                    <td className={`px-4 py-4 text-right text-xs font-mono font-bold ${isNegative(grandTotals[cid].amount) ? 'text-red-500' : ''}`}>
+                    <td className={`px-4 py-4 text-right text-xs font-numbers font-bold ${isNegative(grandTotals[cid].amount) ? 'text-red-500' : ''}`}>
                       {formatAmount(grandTotals[cid].amount)}
                     </td>
                   </React.Fragment>
@@ -183,7 +183,7 @@ export default function SummaryTables() {
                 <td className="px-4 py-4 text-center border-l border-[#9E875D]/20">
                   <span className="text-sm font-bold text-[#9E875D]">{grandTotals.totalCount}</span>
                 </td>
-                <td className={`px-4 py-4 text-right text-sm font-mono font-bold ${isNegative(grandTotals.totalAmount) ? 'text-red-500' : 'text-[#2D3436]'}`}>
+                <td className={`px-4 py-4 text-right text-sm font-numbers font-bold ${isNegative(grandTotals.totalAmount) ? 'text-red-500' : 'text-[#2D3436]'}`}>
                   {formatAmount(grandTotals.totalAmount)}
                 </td>
               </tr>
@@ -247,17 +247,17 @@ export default function SummaryTables() {
                       <span className="font-bold text-[#9E875D]">{cid}</span>
                       <span className="text-xs text-gray-400 ml-2">{CONTRACT_LABELS[cid]}</span>
                     </td>
-                    <td className={`px-5 py-4 text-right font-mono text-sm ${isNegative(ffc) ? 'text-red-500 font-bold' : ''}`}>
+                    <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(ffc) ? 'text-red-500 font-bold' : ''}`}>
                       <Tooltip content={`FFC Summary: SAR ${formatAmount(ffc)}`}>
                         <span className="bg-emerald-50 px-2 py-1 rounded-lg">{formatAmount(ffc)}</span>
                       </Tooltip>
                     </td>
-                    <td className={`px-5 py-4 text-right font-mono text-sm ${isNegative(to) ? 'text-red-500 font-bold' : ''}`}>
+                    <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(to) ? 'text-red-500 font-bold' : ''}`}>
                       <Tooltip content={`RSG To Summary: SAR ${formatAmount(to)}`}>
                         <span className="bg-blue-50 px-2 py-1 rounded-lg">{formatAmount(to)}</span>
                       </Tooltip>
                     </td>
-                    <td className={`px-5 py-4 text-right font-mono text-sm font-bold`}>
+                    <td className={`px-5 py-4 text-right font-numbers text-sm font-bold`}>
                       {disc !== 0 ? (
                         <span className={`px-3 py-1 rounded-lg ${disc > 0 ? 'bg-orange-100 text-orange-700' : 'bg-red-100 text-red-600'}`}>
                           {formatAmount(disc)}
@@ -280,9 +280,9 @@ export default function SummaryTables() {
                   const disc = ffc - to
                   return (
                     <>
-                      <td className={`px-5 py-4 text-right font-mono text-sm ${isNegative(ffc) ? 'text-red-500' : ''}`}>{formatAmount(ffc)}</td>
-                      <td className={`px-5 py-4 text-right font-mono text-sm ${isNegative(to) ? 'text-red-500' : ''}`}>{formatAmount(to)}</td>
-                      <td className={`px-5 py-4 text-right font-mono text-sm ${disc !== 0 ? 'text-orange-700' : 'text-green-600'}`}>{formatAmount(disc)}</td>
+                      <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(ffc) ? 'text-red-500' : ''}`}>{formatAmount(ffc)}</td>
+                      <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(to) ? 'text-red-500' : ''}`}>{formatAmount(to)}</td>
+                      <td className={`px-5 py-4 text-right font-numbers text-sm ${disc !== 0 ? 'text-orange-700' : 'text-green-600'}`}>{formatAmount(disc)}</td>
                     </>
                   )
                 })()}

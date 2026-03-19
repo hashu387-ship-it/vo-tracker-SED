@@ -556,7 +556,7 @@ export default function VariationRegister() {
                     if (firstGroupCols.findIndex(c => c.key === col.key) > 0) return null
 
                     return (
-                      <td key={col.key} className={`px-3 py-3.5 text-xs ${(col.amount || col.combined) ? 'text-right font-mono' : ''}`}>
+                      <td key={col.key} className={`px-3 py-3.5 text-xs ${(col.amount || col.combined) ? 'text-right font-numbers' : ''}`}>
                         {col.combined ? (
                           <div className="flex flex-col gap-0.5 text-right">
                             <div className="flex items-center justify-between">

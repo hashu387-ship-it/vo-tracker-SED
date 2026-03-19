@@ -231,7 +231,7 @@ export default function Dashboard() {
                     <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                     <span className="text-xs font-medium text-emerald-700">FFC Summary</span>
                   </div>
-                  <span className={`text-sm font-bold font-mono ${isNegative(s.ffcTotal) ? 'text-red-500' : 'text-emerald-700'}`}>
+                  <span className={`text-sm font-bold font-numbers ${isNegative(s.ffcTotal) ? 'text-red-500' : 'text-emerald-700'}`}>
                     {formatAmount(s.ffcTotal)}
                   </span>
                 </div>
@@ -242,7 +242,7 @@ export default function Dashboard() {
                     <div className="w-2 h-2 rounded-full bg-blue-500"></div>
                     <span className="text-xs font-medium text-blue-700">RSG Summary</span>
                   </div>
-                  <span className={`text-sm font-bold font-mono ${isNegative(s.toTotal) ? 'text-red-500' : 'text-blue-700'}`}>
+                  <span className={`text-sm font-bold font-numbers ${isNegative(s.toTotal) ? 'text-red-500' : 'text-blue-700'}`}>
                     {formatAmount(s.toTotal)}
                   </span>
                 </div>
@@ -254,7 +254,7 @@ export default function Dashboard() {
                       <AlertTriangle size={12} className="text-orange-500" />
                       <span className="text-xs font-medium text-orange-700">Discrepancy</span>
                     </div>
-                    <span className={`text-sm font-bold font-mono ${isNegative(s.discrepancy) ? 'text-red-500' : 'text-orange-700'}`}>
+                    <span className={`text-sm font-bold font-numbers ${isNegative(s.discrepancy) ? 'text-red-500' : 'text-orange-700'}`}>
                       {formatAmount(s.discrepancy)}
                     </span>
                   </div>
@@ -267,7 +267,7 @@ export default function Dashboard() {
                       <div className="w-2 h-2 rounded-full bg-purple-500"></div>
                       <span className="text-xs font-medium text-purple-700">Approved OA</span>
                     </div>
-                    <span className="text-sm font-bold font-mono text-purple-700">{formatAmount(oa)}</span>
+                    <span className="text-sm font-bold font-numbers text-purple-700">{formatAmount(oa)}</span>
                   </div>
                 )}
 
@@ -465,7 +465,7 @@ export default function Dashboard() {
                       <span className="text-[10px] text-red-500 font-medium">{daysOverdue}d overdue</span>
                     </div>
                   </div>
-                  <span className="text-[10px] text-red-400 whitespace-nowrap font-mono flex-shrink-0 mt-0.5">{dueDate}</span>
+                  <span className="text-[10px] text-red-400 whitespace-nowrap font-numbers flex-shrink-0 mt-0.5">{dueDate}</span>
                 </motion.div>
               )
             })}
@@ -492,7 +492,7 @@ function KPICard({ label, value, customValue, icon, color, tooltip, highlight })
             <AnimatedNumber
               value={value}
               prefix="SAR "
-              className="text-lg font-bold font-mono"
+              className="text-lg font-bold font-numbers"
             />
           )}
         </div>

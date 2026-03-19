@@ -146,7 +146,7 @@ export default function AddVariation({ onClose, onCreated }) {
                   <div className="grid grid-cols-3 gap-3">
                     {['ffc_revised_submission', 'ffc_initial_submission', 'ffc_summary'].map(f => (
                       <Field key={f} label={f.replace('ffc_', '').replace(/_/g, ' ')}>
-                        <input type="number" step="0.01" value={form[f]} onChange={e => set(f, e.target.value)} className="input-field font-mono text-right" />
+                        <input type="number" step="0.01" value={form[f]} onChange={e => set(f, e.target.value)} className="input-field font-numbers text-right" />
                       </Field>
                     ))}
                   </div>
@@ -157,7 +157,7 @@ export default function AddVariation({ onClose, onCreated }) {
                   <div className="grid grid-cols-3 gap-3">
                     {['rsg_assessment', 'to_summary', 'approved_on_account'].map(f => (
                       <Field key={f} label={f.replace('rsg_', '').replace(/_/g, ' ')}>
-                        <input type="number" step="0.01" value={form[f]} onChange={e => set(f, e.target.value)} className="input-field font-mono text-right" />
+                        <input type="number" step="0.01" value={form[f]} onChange={e => set(f, e.target.value)} className="input-field font-numbers text-right" />
                       </Field>
                     ))}
                   </div>

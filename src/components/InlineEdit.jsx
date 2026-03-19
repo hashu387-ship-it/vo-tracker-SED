@@ -92,7 +92,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         <Tooltip content={tooltip}>
           <div
             onClick={(e) => { stopProp(e); setEditing(true) }}
-            className={`cursor-pointer text-right font-mono text-xs whitespace-nowrap px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
+            className={`cursor-pointer text-right font-numbers text-xs whitespace-nowrap px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
           >
             {formatAmount(value)}
             <Pencil size={9} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
@@ -174,7 +174,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
           </div>
         ) : AMOUNT_FIELDS.includes(field) ? (
           <div className="flex items-center gap-1">
-            <input ref={inputRef} type="text" value={editValue} onChange={e => setEditValue(e.target.value)} onBlur={handleSave} onKeyDown={handleKeyDown} className="inline-edit-input text-xs text-right font-mono" />
+            <input ref={inputRef} type="text" value={editValue} onChange={e => setEditValue(e.target.value)} onBlur={handleSave} onKeyDown={handleKeyDown} className="inline-edit-input text-xs text-right font-numbers" />
           </div>
         ) : (field === 'ffc_remarks' || field === 'rsg_remarks') ? (
           <div>
