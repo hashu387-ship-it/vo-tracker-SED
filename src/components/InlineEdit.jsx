@@ -137,13 +137,14 @@ export default function InlineEdit({ value, field, onSave }) {
       )
     }
     // Text fields
+    const isDescription = field === 'description'
     return (
       <Tooltip content={value ? `${tooltip}\n\n${value}` : tooltip}>
         <div
           onClick={() => setEditing(true)}
-          className="cursor-pointer text-xs max-w-[220px] px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative"
+          className={`cursor-pointer text-xs px-1.5 py-1 rounded transition-all hover:bg-white hover:shadow-sm group relative ${isDescription ? '' : 'max-w-[220px]'}`}
         >
-          <span className="line-clamp-2">{value || <span className="text-gray-300">—</span>}</span>
+          <span className={isDescription ? 'line-clamp-3 text-[13px] leading-snug font-medium text-gray-800' : 'line-clamp-2'}>{value || <span className="text-gray-300">—</span>}</span>
           <Pencil size={9} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
         </div>
       </Tooltip>
