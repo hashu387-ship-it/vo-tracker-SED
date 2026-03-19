@@ -22,11 +22,11 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'no', label: '#', width: 'w-10', editable: false },
-      { key: 'vo_ref', label: 'VO Ref', width: 'w-20', editable: true },
-      { key: 'description', label: 'Description', width: 'min-w-[320px] max-w-[450px]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-36', editable: true },
-      { key: 'action_by', label: 'Action', width: 'w-20', editable: true },
+      { key: 'no', label: '#', width: 'w-8', editable: false },
+      { key: 'vo_ref', label: 'VO Ref', width: 'w-16', editable: true },
+      { key: 'description', label: 'Description', width: 'min-w-[220px] max-w-[320px]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-28', editable: true },
+      { key: 'action_by', label: 'Action', width: 'w-16', editable: true },
     ]
   },
   {
@@ -35,8 +35,8 @@ const COLUMN_GROUPS = [
     color: 'col-group-ffc',
     dotColor: 'bg-emerald-500',
     columns: [
-      { key: 'ffc_submission', label: 'Initial / Revised', width: 'w-36', combined: true, editable: false },
-      { key: 'ffc_summary', label: 'Summary', width: 'w-28', amount: true, editable: true },
+      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-28', combined: true, editable: false },
+      { key: 'ffc_summary', label: 'Summary', width: 'w-24', amount: true, editable: true },
     ]
   },
   {
@@ -45,9 +45,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-rsg',
     dotColor: 'bg-blue-500',
     columns: [
-      { key: 'rsg_assessment', label: 'Assess.', width: 'w-28', amount: true, editable: true },
-      { key: 'to_summary', label: 'To Summary', width: 'w-28', amount: true, editable: true },
-      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-28', amount: true, editable: true },
+      { key: 'rsg_assessment', label: 'Assess.', width: 'w-24', amount: true, editable: true },
+      { key: 'to_summary', label: 'To Sum', width: 'w-24', amount: true, editable: true },
+      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-24', amount: true, editable: true },
     ]
   },
   {
@@ -56,9 +56,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'ffc_target_date', label: 'FFC Target', width: 'w-24', editable: true },
-      { key: 'rsg_target_date', label: 'RSG Target', width: 'w-24', editable: true },
-      { key: 'substantiated_docs', label: 'Subst. Docs', width: 'w-28', editable: true },
+      { key: 'ffc_target_date', label: 'FFC', width: 'w-20', editable: true },
+      { key: 'rsg_target_date', label: 'RSG', width: 'w-20', editable: true },
+      { key: 'substantiated_docs', label: 'Docs', width: 'w-20', editable: true },
     ]
   },
 ]
@@ -331,9 +331,9 @@ export default function VariationRegister() {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl shadow-2xl border border-[#d4cbb5] overflow-hidden table-wrapper">
-        <div className="overflow-auto max-h-[75vh]">
-          <table className="w-full text-sm table-3d border-separate border-spacing-0">
+      <div className="rounded-xl shadow-2xl border border-[#d4cbb5] overflow-hidden table-wrapper">
+        <div className="overflow-auto max-h-[80vh]">
+          <table className="w-full text-[11px] table-3d border-separate border-spacing-0">
             {/* Column group headers */}
             <thead className="sticky top-0 z-30">
               <tr>
@@ -341,16 +341,16 @@ export default function VariationRegister() {
                   <th
                     key={group.id}
                     colSpan={group.columns.length}
-                    className={`px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest ${group.color}`}
+                    className={`px-1.5 py-1 text-center text-[9px] font-bold uppercase tracking-widest ${group.color}`}
                   >
-                    <div className="flex items-center justify-center gap-1.5">
-                      <span className={`w-2 h-2 rounded-full ${group.dotColor} shadow-sm`}></span>
+                    <div className="flex items-center justify-center gap-1">
+                      <span className={`w-1.5 h-1.5 rounded-full ${group.dotColor}`}></span>
                       {group.label}
                     </div>
                   </th>
                 ))}
-                <th className="col-group-general px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest w-20">
-                  <History size={12} className="mx-auto" />
+                <th className="col-group-general px-1 py-1 text-center text-[9px] font-bold uppercase tracking-widest w-12">
+                  <History size={10} className="mx-auto" />
                 </th>
               </tr>
               {/* Individual column headers */}
@@ -359,21 +359,21 @@ export default function VariationRegister() {
                   <th
                     key={col.key}
                     onClick={() => handleSort(col.key)}
-                    className={`px-3 py-3 text-left text-[10px] font-bold uppercase tracking-wider cursor-pointer select-none whitespace-nowrap transition-all duration-200 hover:bg-[#EDE6D3]/70 ${col.amount ? 'text-right' : ''} ${col.width}`}
+                    className={`px-1.5 py-1.5 text-left text-[9px] font-bold uppercase tracking-wider cursor-pointer select-none whitespace-nowrap transition-all duration-200 hover:bg-[#EDE6D3]/70 ${col.amount || col.combined ? 'text-right' : ''} ${col.width}`}
                   >
-                    <div className={`flex items-center gap-1.5 ${col.amount ? 'justify-end' : ''}`}>
+                    <div className={`flex items-center gap-1 ${col.amount || col.combined ? 'justify-end' : ''}`}>
                       {col.label}
                       {sortCol === col.key ? (
-                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[#9E875D]/15">
-                          {sortDir === 'asc' ? <ChevronUp size={12} className="text-[#9E875D]" /> : <ChevronDown size={12} className="text-[#9E875D]" />}
+                        <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-[#9E875D]/15">
+                          {sortDir === 'asc' ? <ChevronUp size={9} className="text-[#9E875D]" /> : <ChevronDown size={9} className="text-[#9E875D]" />}
                         </span>
                       ) : (
-                        <ArrowUpDown size={10} className="text-gray-300" />
+                        <ArrowUpDown size={8} className="text-gray-300" />
                       )}
                     </div>
                   </th>
                 ))}
-                <th className="px-3 py-3 w-20"></th>
+                <th className="px-1 py-1.5 w-12"></th>
               </tr>
             </thead>
             <tbody>
@@ -381,9 +381,9 @@ export default function VariationRegister() {
                 Array.from({ length: 8 }).map((_, i) => (
                   <tr key={i}>
                     {visibleColumns.map((col, j) => (
-                      <td key={j} className="px-3 py-3.5"><div className="h-4 shimmer rounded-md"></div></td>
+                      <td key={j} className="px-1.5 py-1"><div className="h-3 shimmer rounded"></div></td>
                     ))}
-                    <td className="px-3 py-3.5"><div className="h-4 shimmer rounded-md w-12"></div></td>
+                    <td className="px-1 py-1"><div className="h-3 shimmer rounded w-8"></div></td>
                   </tr>
                 ))
               ) : sorted.length === 0 ? (
@@ -421,21 +421,21 @@ export default function VariationRegister() {
                           else if (rsgCols.has(col.key)) cellBg = 'cell-rsg'
 
                           return (
-                            <td key={col.key} className={`px-3 py-2.5 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
+                            <td key={col.key} className={`px-1.5 py-0.5 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
                               {col.combined ? (
                                 /* Combined Initial / Revised column */
-                                <div className="flex flex-col gap-0.5 text-right" onClick={(e) => e.stopPropagation()}>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <span className="text-[9px] text-gray-400 uppercase font-medium">Init</span>
+                                <div className="flex flex-col text-right" onClick={(e) => e.stopPropagation()}>
+                                  <div className="flex items-center justify-between gap-1">
+                                    <span className="text-[7px] text-gray-400 uppercase font-medium leading-none">I</span>
                                     <InlineEdit
                                       value={v.ffc_initial_submission}
                                       field="ffc_initial_submission"
                                       onSave={(field, newValue) => handleSave(v.id, field, newValue)}
                                     />
                                   </div>
-                                  <div className="border-t border-dashed border-gray-200"></div>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <span className="text-[9px] text-emerald-500 uppercase font-semibold">Rev</span>
+                                  <div className="border-t border-dashed border-gray-200/60"></div>
+                                  <div className="flex items-center justify-between gap-1">
+                                    <span className="text-[7px] text-emerald-500 uppercase font-semibold leading-none">R</span>
                                     <InlineEdit
                                       value={v.ffc_revised_submission}
                                       field="ffc_revised_submission"
@@ -460,21 +460,21 @@ export default function VariationRegister() {
                             </td>
                           )
                         })}
-                        <td className="px-2 py-2.5 text-center" onClick={(e) => e.stopPropagation()}>
-                          <div className="flex items-center gap-0.5 justify-center">
+                        <td className="px-0.5 py-0.5 text-center" onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center gap-0 justify-center">
                             <Tooltip content="View change history">
                               <button
                                 onClick={() => setLogId(v.id)}
-                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#9E875D] hover:bg-[#EDE6D3] transition-all"
+                                className="p-0.5 rounded text-gray-400 hover:text-[#9E875D] hover:bg-[#EDE6D3] transition-all"
                               >
-                                <History size={14} />
+                                <History size={11} />
                               </button>
                             </Tooltip>
                             <motion.div
                               animate={{ rotate: isExpanded ? 180 : 0 }}
-                              transition={{ duration: 0.25 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              <ChevronDown size={14} className={`transition-colors ${isExpanded ? 'text-[#9E875D]' : 'text-gray-300'}`} />
+                              <ChevronDown size={11} className={`transition-colors ${isExpanded ? 'text-[#9E875D]' : 'text-gray-300'}`} />
                             </motion.div>
                           </div>
                         </td>
@@ -496,8 +496,8 @@ export default function VariationRegister() {
                                 transition={{ duration: 0.3, ease: 'easeInOut' }}
                                 className="overflow-hidden"
                               >
-                                <div className="expanded-panel p-5">
-                                  <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+                                <div className="expanded-panel p-3">
+                                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                                     <div className="expanded-card">
                                       <h4 className="expanded-card-title text-[#9E875D]">Variation Info</h4>
                                       <InfoRow label="VO Ref" value={v.vo_ref || '—'} />
@@ -547,8 +547,8 @@ export default function VariationRegister() {
                   {visibleColumns.map((col, i) => {
                     if (i === 0) {
                       return (
-                        <td key={col.key} className="px-3 py-3.5 text-xs font-black text-[#2D3436] uppercase tracking-wider" colSpan={visibleGroups[0]?.columns.length}>
-                          Total ({sorted.length} items)
+                        <td key={col.key} className="px-1.5 py-1.5 text-[10px] font-black text-[#2D3436] uppercase tracking-wider" colSpan={visibleGroups[0]?.columns.length}>
+                          Total ({sorted.length})
                         </td>
                       )
                     }
@@ -556,26 +556,26 @@ export default function VariationRegister() {
                     if (firstGroupCols.findIndex(c => c.key === col.key) > 0) return null
 
                     return (
-                      <td key={col.key} className={`px-3 py-3.5 text-xs ${(col.amount || col.combined) ? 'text-right font-numbers' : ''}`}>
+                      <td key={col.key} className={`px-1.5 py-1.5 text-[10px] ${(col.amount || col.combined) ? 'text-right font-numbers' : ''}`}>
                         {col.combined ? (
-                          <div className="flex flex-col gap-0.5 text-right">
+                          <div className="flex flex-col text-right">
                             <div className="flex items-center justify-between">
-                              <span className="text-[9px] text-gray-400 font-medium">Init</span>
-                              <span className={`font-black text-[12px] ${isNegative(totals.ffc_initial_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                              <span className="text-[7px] text-gray-400 font-medium">I</span>
+                              <span className={`font-black text-[10px] ${isNegative(totals.ffc_initial_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                                 {formatAmount(totals.ffc_initial_submission)}
                               </span>
                             </div>
                             <div className="border-t border-dashed border-gray-300"></div>
                             <div className="flex items-center justify-between">
-                              <span className="text-[9px] text-emerald-600 font-semibold">Rev</span>
-                              <span className={`font-black text-[12px] ${isNegative(totals.ffc_revised_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                              <span className="text-[7px] text-emerald-600 font-semibold">R</span>
+                              <span className={`font-black text-[10px] ${isNegative(totals.ffc_revised_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                                 {formatAmount(totals.ffc_revised_submission)}
                               </span>
                             </div>
                           </div>
                         ) : col.amount ? (
                           <Tooltip content={`Total: SAR ${formatAmount(totals[col.key])}`}>
-                            <span className={`font-black text-[13px] ${isNegative(totals[col.key]) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                            <span className={`font-black text-[10px] ${isNegative(totals[col.key]) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                               {formatAmount(totals[col.key])}
                             </span>
                           </Tooltip>
@@ -633,8 +633,8 @@ export default function VariationRegister() {
 
 function InfoRow({ label, value, neg }) {
   return (
-    <div className="flex items-start gap-2 text-xs">
-      <span className="text-gray-400 w-20 flex-shrink-0">{label}</span>
+    <div className="flex items-start gap-1.5 text-[10px]">
+      <span className="text-gray-400 w-16 flex-shrink-0">{label}</span>
       <span className={`font-medium ${neg ? 'text-red-500' : 'text-gray-700'}`}>{value}</span>
     </div>
   )
