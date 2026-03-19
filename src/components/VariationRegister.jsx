@@ -22,11 +22,11 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'no', label: '#', width: 'w-8', editable: false },
-      { key: 'vo_ref', label: 'VO Ref', width: 'w-16', editable: true },
-      { key: 'description', label: 'Description', width: 'min-w-[220px] max-w-[320px]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-28', editable: true },
-      { key: 'action_by', label: 'Action', width: 'w-16', editable: true },
+      { key: 'no', label: '#', width: 'w-[3%]', editable: false },
+      { key: 'vo_ref', label: 'VO Ref', width: 'w-[5%]', editable: true },
+      { key: 'description', label: 'Description', width: 'w-[22%]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-[10%]', editable: true },
+      { key: 'action_by', label: 'Action', width: 'w-[5%]', editable: true },
     ]
   },
   {
@@ -35,8 +35,8 @@ const COLUMN_GROUPS = [
     color: 'col-group-ffc',
     dotColor: 'bg-emerald-500',
     columns: [
-      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-28', combined: true, editable: false },
-      { key: 'ffc_summary', label: 'Summary', width: 'w-24', amount: true, editable: true },
+      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-[10%]', combined: true, editable: false },
+      { key: 'ffc_summary', label: 'Summary', width: 'w-[9%]', amount: true, editable: true },
     ]
   },
   {
@@ -45,9 +45,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-rsg',
     dotColor: 'bg-blue-500',
     columns: [
-      { key: 'rsg_assessment', label: 'Assess.', width: 'w-24', amount: true, editable: true },
-      { key: 'to_summary', label: 'To Sum', width: 'w-24', amount: true, editable: true },
-      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-24', amount: true, editable: true },
+      { key: 'rsg_assessment', label: 'Assess.', width: 'w-[9%]', amount: true, editable: true },
+      { key: 'to_summary', label: 'To Sum', width: 'w-[9%]', amount: true, editable: true },
+      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-[9%]', amount: true, editable: true },
     ]
   },
   {
@@ -56,9 +56,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'ffc_target_date', label: 'FFC', width: 'w-20', editable: true },
-      { key: 'rsg_target_date', label: 'RSG', width: 'w-20', editable: true },
-      { key: 'substantiated_docs', label: 'Docs', width: 'w-20', editable: true },
+      { key: 'ffc_target_date', label: 'FFC', width: 'w-[6%]', editable: true },
+      { key: 'rsg_target_date', label: 'RSG', width: 'w-[6%]', editable: true },
+      { key: 'substantiated_docs', label: 'Docs', width: 'w-[6%]', editable: true },
     ]
   },
 ]
@@ -333,7 +333,7 @@ export default function VariationRegister() {
       {/* Table */}
       <div className="rounded-xl shadow-2xl border border-[#d4cbb5] overflow-hidden table-wrapper">
         <div className="overflow-auto max-h-[80vh]">
-          <table className="w-full text-[11px] table-3d border-separate border-spacing-0">
+          <table className="w-full text-[11px] table-3d border-separate border-spacing-0 table-fixed">
             {/* Column group headers */}
             <thead className="sticky top-0 z-30">
               <tr>
@@ -349,7 +349,7 @@ export default function VariationRegister() {
                     </div>
                   </th>
                 ))}
-                <th className="col-group-general px-1 py-1 text-center text-[9px] font-bold uppercase tracking-widest w-12">
+                <th className="col-group-general px-1 py-1 text-center text-[9px] font-bold uppercase tracking-widest w-[3%]">
                   <History size={10} className="mx-auto" />
                 </th>
               </tr>
@@ -373,7 +373,7 @@ export default function VariationRegister() {
                     </div>
                   </th>
                 ))}
-                <th className="px-1 py-1.5 w-12"></th>
+                <th className="px-1 py-1.5 w-[3%]"></th>
               </tr>
             </thead>
             <tbody>
