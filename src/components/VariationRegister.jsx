@@ -329,47 +329,49 @@ export default function VariationRegister() {
       </div>
 
       {/* Table */}
-      <div className="glass rounded-2xl shadow-lg border border-[#EDE6D3] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm table-3d border-collapse">
+      <div className="rounded-2xl shadow-2xl border border-[#d4cbb5] overflow-hidden table-wrapper">
+        <div className="overflow-auto max-h-[75vh]">
+          <table className="w-full text-sm table-3d border-separate border-spacing-0">
             {/* Column group headers */}
-            <thead className="sticky top-0 z-20">
+            <thead className="sticky top-0 z-30">
               <tr>
                 {visibleGroups.map(group => (
                   <th
                     key={group.id}
                     colSpan={group.columns.length}
-                    className={`px-3 py-2 text-center text-[10px] font-bold uppercase tracking-widest ${group.color}`}
+                    className={`px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest ${group.color}`}
                   >
                     <div className="flex items-center justify-center gap-1.5">
-                      <span className={`w-2 h-2 rounded-full ${group.dotColor}`}></span>
+                      <span className={`w-2 h-2 rounded-full ${group.dotColor} shadow-sm`}></span>
                       {group.label}
                     </div>
                   </th>
                 ))}
-                <th className="col-group-general px-3 py-2 text-center text-[10px] font-bold uppercase tracking-widest w-16">
+                <th className="col-group-general px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest w-20">
                   <History size={12} className="mx-auto" />
                 </th>
               </tr>
               {/* Individual column headers */}
-              <tr className="bg-white/90 backdrop-blur">
+              <tr className="header-frost">
                 {visibleColumns.map(col => (
                   <th
                     key={col.key}
                     onClick={() => handleSort(col.key)}
-                    className={`px-3 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider cursor-pointer select-none whitespace-nowrap transition-colors hover:bg-[#EDE6D3]/50 ${col.amount ? 'text-right' : ''} ${col.width}`}
+                    className={`px-3 py-3 text-left text-[10px] font-bold uppercase tracking-wider cursor-pointer select-none whitespace-nowrap transition-all duration-200 hover:bg-[#EDE6D3]/70 ${col.amount ? 'text-right' : ''} ${col.width}`}
                   >
-                    <div className={`flex items-center gap-1 ${col.amount ? 'justify-end' : ''}`}>
+                    <div className={`flex items-center gap-1.5 ${col.amount ? 'justify-end' : ''}`}>
                       {col.label}
                       {sortCol === col.key ? (
-                        sortDir === 'asc' ? <ChevronUp size={12} className="text-[#9E875D]" /> : <ChevronDown size={12} className="text-[#9E875D]" />
+                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[#9E875D]/15">
+                          {sortDir === 'asc' ? <ChevronUp size={12} className="text-[#9E875D]" /> : <ChevronDown size={12} className="text-[#9E875D]" />}
+                        </span>
                       ) : (
                         <ArrowUpDown size={10} className="text-gray-300" />
                       )}
                     </div>
                   </th>
                 ))}
-                <th className="px-3 py-2.5 w-16"></th>
+                <th className="px-3 py-3 w-20"></th>
               </tr>
             </thead>
             <tbody>
@@ -377,9 +379,9 @@ export default function VariationRegister() {
                 Array.from({ length: 8 }).map((_, i) => (
                   <tr key={i}>
                     {visibleColumns.map((col, j) => (
-                      <td key={j} className="px-3 py-3"><div className="h-4 shimmer rounded"></div></td>
+                      <td key={j} className="px-3 py-3.5"><div className="h-4 shimmer rounded-md"></div></td>
                     ))}
-                    <td className="px-3 py-3"><div className="h-4 shimmer rounded w-12"></div></td>
+                    <td className="px-3 py-3.5"><div className="h-4 shimmer rounded-md w-12"></div></td>
                   </tr>
                 ))
               ) : sorted.length === 0 ? (
@@ -395,17 +397,17 @@ export default function VariationRegister() {
               ) : (
                 sorted.map((v, idx) => {
                   const isExpanded = expandedRow === v.id
-                  // FFC vs RSG cell backgrounds
                   const ffcCols = new Set(['ffc_revised_submission', 'ffc_initial_submission', 'ffc_summary', 'ffc_target_date'])
                   const rsgCols = new Set(['rsg_assessment', 'to_summary', 'approved_on_account', 'rsg_target_date'])
 
                   return (
                     <React.Fragment key={v.id}>
                       <motion.tr
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: idx * 0.02 }}
-                        className={`border-b border-gray-100/80 table-row-hover ${v.is_closed ? 'opacity-50' : ''}`}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.015, duration: 0.25 }}
+                        onClick={() => setExpandedRow(isExpanded ? null : v.id)}
+                        className={`table-row-hover cursor-pointer ${isExpanded ? 'row-expanded' : ''} ${v.is_closed ? 'opacity-50' : ''} ${idx % 2 === 0 ? 'row-even' : 'row-odd'}`}
                         style={{ backgroundColor: getStatusRowBg(v.rsg_status) }}
                         onMouseEnter={() => setHoveredRow(v)}
                         onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}
@@ -413,11 +415,11 @@ export default function VariationRegister() {
                       >
                         {visibleColumns.map(col => {
                           let cellBg = ''
-                          if (ffcCols.has(col.key)) cellBg = 'bg-emerald-50/30'
-                          else if (rsgCols.has(col.key)) cellBg = 'bg-blue-50/30'
+                          if (ffcCols.has(col.key)) cellBg = 'cell-ffc'
+                          else if (rsgCols.has(col.key)) cellBg = 'cell-rsg'
 
                           return (
-                            <td key={col.key} className={`px-3 py-2 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
+                            <td key={col.key} className={`px-3 py-2.5 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
                               {col.editable ? (
                                 <InlineEdit
                                   value={v[col.key]}
@@ -425,15 +427,18 @@ export default function VariationRegister() {
                                   onSave={(field, newValue) => handleSave(v.id, field, newValue)}
                                 />
                               ) : (
-                                <Tooltip content={`Variation #${v.no}`}>
-                                  <span className="text-xs font-bold text-[#9E875D]">{v[col.key]}</span>
-                                </Tooltip>
+                                /* # Number column — premium styled */
+                                <div className="flex items-center justify-center">
+                                  <span className="num-badge">
+                                    {v[col.key]}
+                                  </span>
+                                </div>
                               )}
                             </td>
                           )
                         })}
-                        <td className="px-3 py-2 text-center">
-                          <div className="flex items-center gap-1 justify-center">
+                        <td className="px-2 py-2.5 text-center" onClick={(e) => e.stopPropagation()}>
+                          <div className="flex items-center gap-0.5 justify-center">
                             <Tooltip content="View change history">
                               <button
                                 onClick={() => setLogId(v.id)}
@@ -442,14 +447,12 @@ export default function VariationRegister() {
                                 <History size={14} />
                               </button>
                             </Tooltip>
-                            <Tooltip content={isExpanded ? 'Collapse details' : 'Expand details'}>
-                              <button
-                                onClick={() => setExpandedRow(isExpanded ? null : v.id)}
-                                className="p-1.5 rounded-lg text-gray-400 hover:text-[#9E875D] hover:bg-[#EDE6D3] transition-all"
-                              >
-                                {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                              </button>
-                            </Tooltip>
+                            <motion.div
+                              animate={{ rotate: isExpanded ? 180 : 0 }}
+                              transition={{ duration: 0.25 }}
+                            >
+                              <ChevronDown size={14} className={`transition-colors ${isExpanded ? 'text-[#9E875D]' : 'text-gray-300'}`} />
+                            </motion.div>
                           </div>
                         </td>
                       </motion.tr>
@@ -457,45 +460,56 @@ export default function VariationRegister() {
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.tr
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
                           >
-                            <td colSpan={visibleColumns.length + 1} className="bg-gradient-to-r from-[#f5f0e5] to-white p-4">
-                              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <div className="space-y-2">
-                                  <h4 className="text-xs font-bold text-[#9E875D] uppercase tracking-wider">Variation Info</h4>
-                                  <InfoRow label="VO Ref" value={v.vo_ref || '—'} />
-                                  <InfoRow label="Status" value={v.rsg_status} />
-                                  <InfoRow label="Action By" value={v.action_by || '—'} />
-                                  <InfoRow label="Closed" value={v.is_closed ? 'Yes' : 'No'} />
-                                </div>
-                                <div className="space-y-2">
-                                  <h4 className="text-xs font-bold text-emerald-600 uppercase tracking-wider">FFC Values</h4>
-                                  <InfoRow label="Revised" value={`SAR ${formatAmount(v.ffc_revised_submission)}`} neg={isNegative(v.ffc_revised_submission)} />
-                                  <InfoRow label="Initial" value={`SAR ${formatAmount(v.ffc_initial_submission)}`} neg={isNegative(v.ffc_initial_submission)} />
-                                  <InfoRow label="Summary" value={`SAR ${formatAmount(v.ffc_summary)}`} neg={isNegative(v.ffc_summary)} />
-                                </div>
-                                <div className="space-y-2">
-                                  <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider">RSG Values</h4>
-                                  <InfoRow label="Assessment" value={`SAR ${formatAmount(v.rsg_assessment)}`} neg={isNegative(v.rsg_assessment)} />
-                                  <InfoRow label="To Summary" value={`SAR ${formatAmount(v.to_summary)}`} neg={isNegative(v.to_summary)} />
-                                  <InfoRow label="Approved OA" value={`SAR ${formatAmount(v.approved_on_account)}`} neg={isNegative(v.approved_on_account)} />
-                                </div>
-                                <div className="space-y-2">
-                                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Remarks</h4>
-                                  <div className="space-y-1.5">
-                                    <div className="text-xs">
-                                      <span className="text-emerald-600 font-semibold">FFC:</span>
-                                      <InlineEdit value={v.ffc_remarks} field="ffc_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                            <td colSpan={visibleColumns.length + 1} className="p-0">
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                className="overflow-hidden"
+                              >
+                                <div className="expanded-panel p-5">
+                                  <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+                                    <div className="expanded-card">
+                                      <h4 className="expanded-card-title text-[#9E875D]">Variation Info</h4>
+                                      <InfoRow label="VO Ref" value={v.vo_ref || '—'} />
+                                      <InfoRow label="Status" value={v.rsg_status} />
+                                      <InfoRow label="Action By" value={v.action_by || '—'} />
+                                      <InfoRow label="Closed" value={v.is_closed ? 'Yes' : 'No'} />
                                     </div>
-                                    <div className="text-xs">
-                                      <span className="text-blue-600 font-semibold">RSG:</span>
-                                      <InlineEdit value={v.rsg_remarks} field="rsg_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                                    <div className="expanded-card">
+                                      <h4 className="expanded-card-title text-emerald-600">FFC Values</h4>
+                                      <InfoRow label="Revised" value={`SAR ${formatAmount(v.ffc_revised_submission)}`} neg={isNegative(v.ffc_revised_submission)} />
+                                      <InfoRow label="Initial" value={`SAR ${formatAmount(v.ffc_initial_submission)}`} neg={isNegative(v.ffc_initial_submission)} />
+                                      <InfoRow label="Summary" value={`SAR ${formatAmount(v.ffc_summary)}`} neg={isNegative(v.ffc_summary)} />
+                                    </div>
+                                    <div className="expanded-card">
+                                      <h4 className="expanded-card-title text-blue-600">RSG Values</h4>
+                                      <InfoRow label="Assessment" value={`SAR ${formatAmount(v.rsg_assessment)}`} neg={isNegative(v.rsg_assessment)} />
+                                      <InfoRow label="To Summary" value={`SAR ${formatAmount(v.to_summary)}`} neg={isNegative(v.to_summary)} />
+                                      <InfoRow label="Approved OA" value={`SAR ${formatAmount(v.approved_on_account)}`} neg={isNegative(v.approved_on_account)} />
+                                    </div>
+                                    <div className="expanded-card" onClick={(e) => e.stopPropagation()}>
+                                      <h4 className="expanded-card-title text-gray-500">Remarks</h4>
+                                      <div className="space-y-2">
+                                        <div className="text-xs">
+                                          <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>FFC:</span>
+                                          <InlineEdit value={v.ffc_remarks} field="ffc_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                                        </div>
+                                        <div className="text-xs">
+                                          <span className="inline-flex items-center gap-1 text-blue-600 font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>RSG:</span>
+                                          <InlineEdit value={v.rsg_remarks} field="rsg_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </motion.div>
                             </td>
                           </motion.tr>
                         )}
@@ -506,24 +520,23 @@ export default function VariationRegister() {
               )}
               {/* Totals row */}
               {sorted.length > 0 && (
-                <tr className="bg-gradient-to-r from-[#EDE6D3] to-[#e0d8c4] font-semibold sticky bottom-0 z-10">
+                <tr className="totals-row sticky bottom-0 z-10">
                   {visibleColumns.map((col, i) => {
                     if (i === 0) {
                       return (
-                        <td key={col.key} className="px-3 py-3 text-xs font-bold text-[#2D3436]" colSpan={visibleGroups[0]?.columns.length}>
-                          TOTAL ({sorted.length} items)
+                        <td key={col.key} className="px-3 py-3.5 text-xs font-black text-[#2D3436] uppercase tracking-wider" colSpan={visibleGroups[0]?.columns.length}>
+                          Total ({sorted.length} items)
                         </td>
                       )
                     }
-                    // Skip cells already covered by colSpan
                     const firstGroupCols = visibleGroups[0]?.columns || []
                     if (firstGroupCols.findIndex(c => c.key === col.key) > 0) return null
 
                     return (
-                      <td key={col.key} className={`px-3 py-3 text-xs ${col.amount ? 'text-right font-mono' : ''}`}>
+                      <td key={col.key} className={`px-3 py-3.5 text-xs ${col.amount ? 'text-right font-mono' : ''}`}>
                         {col.amount ? (
                           <Tooltip content={`Total: SAR ${formatAmount(totals[col.key])}`}>
-                            <span className={`font-bold ${isNegative(totals[col.key]) ? 'text-red-600' : 'text-[#2D3436]'}`}>
+                            <span className={`font-black text-[13px] ${isNegative(totals[col.key]) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                               {formatAmount(totals[col.key])}
                             </span>
                           </Tooltip>
