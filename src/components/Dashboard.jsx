@@ -6,7 +6,7 @@ import { PieChart, Pie, Cell, Tooltip as RTooltip, ResponsiveContainer, Legend, 
 import {
   TrendingUp, TrendingDown, AlertTriangle, CheckCircle2, Clock,
   FileWarning, ArrowUpRight, ArrowDownRight, Activity, Target,
-  Building2, Landmark, Factory, CircleDot
+  Building2, Landmark, Factory, CircleDot, BarChart3
 } from 'lucide-react'
 import Tooltip from './Tooltip'
 
