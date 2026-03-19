@@ -24,8 +24,9 @@ const COLUMN_GROUPS = [
     columns: [
       { key: 'no', label: '#', width: 'w-10', editable: false },
       { key: 'vo_ref', label: 'VO Ref', width: 'w-20', editable: true },
-      { key: 'description', label: 'Description', width: 'min-w-[250px]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-44', editable: true },
+      { key: 'description', label: 'Description', width: 'min-w-[180px] max-w-[220px]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-36', editable: true },
+      { key: 'action_by', label: 'Action', width: 'w-20', editable: true },
     ]
   },
   {
@@ -34,9 +35,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-ffc',
     dotColor: 'bg-emerald-500',
     columns: [
-      { key: 'ffc_revised_submission', label: 'Revised', width: 'w-32', amount: true, editable: true },
-      { key: 'ffc_initial_submission', label: 'Initial', width: 'w-32', amount: true, editable: true },
-      { key: 'ffc_summary', label: 'Summary', width: 'w-32', amount: true, editable: true },
+      { key: 'ffc_revised_submission', label: 'Revised', width: 'w-28', amount: true, editable: true },
+      { key: 'ffc_initial_submission', label: 'Initial', width: 'w-28', amount: true, editable: true },
+      { key: 'ffc_summary', label: 'Summary', width: 'w-28', amount: true, editable: true },
     ]
   },
   {
@@ -45,23 +46,20 @@ const COLUMN_GROUPS = [
     color: 'col-group-rsg',
     dotColor: 'bg-blue-500',
     columns: [
-      { key: 'rsg_assessment', label: 'Assessment', width: 'w-32', amount: true, editable: true },
-      { key: 'to_summary', label: 'To Summary', width: 'w-32', amount: true, editable: true },
-      { key: 'approved_on_account', label: 'Approved OA', width: 'w-32', amount: true, editable: true },
+      { key: 'rsg_assessment', label: 'Assess.', width: 'w-28', amount: true, editable: true },
+      { key: 'to_summary', label: 'To Summary', width: 'w-28', amount: true, editable: true },
+      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-28', amount: true, editable: true },
     ]
   },
   {
     id: 'details',
-    label: 'Details & Actions',
+    label: 'Dates & Details',
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'action_by', label: 'Action By', width: 'w-24', editable: true },
-      { key: 'ffc_remarks', label: 'FFC Remarks', width: 'min-w-[180px]', editable: true },
-      { key: 'rsg_remarks', label: 'RSG Remarks', width: 'min-w-[180px]', editable: true },
-      { key: 'ffc_target_date', label: 'FFC Target', width: 'w-28', editable: true },
-      { key: 'rsg_target_date', label: 'RSG Target', width: 'w-28', editable: true },
-      { key: 'substantiated_docs', label: 'Subst. Docs', width: 'w-36', editable: true },
+      { key: 'ffc_target_date', label: 'FFC Target', width: 'w-24', editable: true },
+      { key: 'rsg_target_date', label: 'RSG Target', width: 'w-24', editable: true },
+      { key: 'substantiated_docs', label: 'Subst. Docs', width: 'w-28', editable: true },
     ]
   },
 ]
@@ -79,7 +77,9 @@ export default function VariationRegister() {
   const [showAdd, setShowAdd] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
   const [expandedRow, setExpandedRow] = useState(null)
-  const [hiddenGroups, setHiddenGroups] = useState(new Set())
+  const [hiddenGroups, setHiddenGroups] = useState(new Set(['details']))
+  const [hoveredRow, setHoveredRow] = useState(null)
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
 
   const loadData = () => {
     setLoading(true)
@@ -396,8 +396,8 @@ export default function VariationRegister() {
                 sorted.map((v, idx) => {
                   const isExpanded = expandedRow === v.id
                   // FFC vs RSG cell backgrounds
-                  const ffcCols = new Set(['ffc_revised_submission', 'ffc_initial_submission', 'ffc_summary', 'ffc_remarks', 'ffc_target_date'])
-                  const rsgCols = new Set(['rsg_assessment', 'to_summary', 'approved_on_account', 'rsg_remarks', 'rsg_target_date'])
+                  const ffcCols = new Set(['ffc_revised_submission', 'ffc_initial_submission', 'ffc_summary', 'ffc_target_date'])
+                  const rsgCols = new Set(['rsg_assessment', 'to_summary', 'approved_on_account', 'rsg_target_date'])
 
                   return (
                     <React.Fragment key={v.id}>
@@ -407,6 +407,9 @@ export default function VariationRegister() {
                         transition={{ delay: idx * 0.02 }}
                         className={`border-b border-gray-100/80 table-row-hover ${v.is_closed ? 'opacity-50' : ''}`}
                         style={{ backgroundColor: getStatusRowBg(v.rsg_status) }}
+                        onMouseEnter={() => setHoveredRow(v)}
+                        onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}
+                        onMouseLeave={() => setHoveredRow(null)}
                       >
                         {visibleColumns.map(col => {
                           let cellBg = ''
@@ -459,7 +462,7 @@ export default function VariationRegister() {
                             exit={{ opacity: 0, height: 0 }}
                           >
                             <td colSpan={visibleColumns.length + 1} className="bg-gradient-to-r from-[#f5f0e5] to-white p-4">
-                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div className="space-y-2">
                                   <h4 className="text-xs font-bold text-[#9E875D] uppercase tracking-wider">Variation Info</h4>
                                   <InfoRow label="VO Ref" value={v.vo_ref || '—'} />
@@ -472,14 +475,25 @@ export default function VariationRegister() {
                                   <InfoRow label="Revised" value={`SAR ${formatAmount(v.ffc_revised_submission)}`} neg={isNegative(v.ffc_revised_submission)} />
                                   <InfoRow label="Initial" value={`SAR ${formatAmount(v.ffc_initial_submission)}`} neg={isNegative(v.ffc_initial_submission)} />
                                   <InfoRow label="Summary" value={`SAR ${formatAmount(v.ffc_summary)}`} neg={isNegative(v.ffc_summary)} />
-                                  <InfoRow label="Remarks" value={v.ffc_remarks || '—'} />
                                 </div>
                                 <div className="space-y-2">
                                   <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider">RSG Values</h4>
                                   <InfoRow label="Assessment" value={`SAR ${formatAmount(v.rsg_assessment)}`} neg={isNegative(v.rsg_assessment)} />
                                   <InfoRow label="To Summary" value={`SAR ${formatAmount(v.to_summary)}`} neg={isNegative(v.to_summary)} />
                                   <InfoRow label="Approved OA" value={`SAR ${formatAmount(v.approved_on_account)}`} neg={isNegative(v.approved_on_account)} />
-                                  <InfoRow label="Remarks" value={v.rsg_remarks || '—'} />
+                                </div>
+                                <div className="space-y-2">
+                                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Remarks</h4>
+                                  <div className="space-y-1.5">
+                                    <div className="text-xs">
+                                      <span className="text-emerald-600 font-semibold">FFC:</span>
+                                      <InlineEdit value={v.ffc_remarks} field="ffc_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                                    </div>
+                                    <div className="text-xs">
+                                      <span className="text-blue-600 font-semibold">RSG:</span>
+                                      <InlineEdit value={v.rsg_remarks} field="rsg_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </td>
@@ -524,6 +538,40 @@ export default function VariationRegister() {
           </table>
         </div>
       </div>
+
+      {/* Row hover tooltip — shows both FFC and RSG remarks */}
+      <AnimatePresence>
+        {hoveredRow && (hoveredRow.ffc_remarks || hoveredRow.rsg_remarks) && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            className="fixed z-[9999] pointer-events-none"
+            style={{ left: tooltipPos.x + 16, top: tooltipPos.y - 10 }}
+          >
+            <div className="bg-[#1a1a2e] text-white px-4 py-3 rounded-xl text-xs leading-relaxed max-w-[380px] shadow-2xl border border-white/10 space-y-2">
+              <p className="font-semibold text-[#9E875D] border-b border-white/10 pb-1.5">
+                #{hoveredRow.no} — {hoveredRow.description?.substring(0, 60)}{hoveredRow.description?.length > 60 ? '...' : ''}
+              </p>
+              {hoveredRow.ffc_remarks && (
+                <div>
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5 align-middle"></span>
+                  <span className="text-emerald-400 font-semibold">FFC:</span>
+                  <p className="text-gray-300 mt-0.5 pl-3.5">{hoveredRow.ffc_remarks}</p>
+                </div>
+              )}
+              {hoveredRow.rsg_remarks && (
+                <div>
+                  <span className="inline-block w-2 h-2 rounded-full bg-blue-400 mr-1.5 align-middle"></span>
+                  <span className="text-blue-400 font-semibold">RSG:</span>
+                  <p className="text-gray-300 mt-0.5 pl-3.5">{hoveredRow.rsg_remarks}</p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {logId && <ChangeLog variationId={logId} onClose={() => setLogId(null)} />}
       {showAdd && <AddVariation onClose={() => setShowAdd(false)} onCreated={() => loadData()} />}

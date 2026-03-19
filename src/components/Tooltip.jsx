@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import {
   useFloating,
   autoUpdate,
@@ -11,13 +11,10 @@ import {
   useRole,
   useInteractions,
   FloatingPortal,
-  arrow,
-  FloatingArrow,
 } from '@floating-ui/react'
 
 export default function Tooltip({ children, content, placement = 'top', delay = 300 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const arrowRef = useRef(null)
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -25,10 +22,9 @@ export default function Tooltip({ children, content, placement = 'top', delay = 
     placement,
     whileElementsMounted: autoUpdate,
     middleware: [
-      offset(10),
+      offset(8),
       flip({ fallbackAxisSideDirection: 'start' }),
       shift({ padding: 8 }),
-      arrow({ element: arrowRef }),
     ],
   })
 
@@ -52,11 +48,10 @@ export default function Tooltip({ children, content, placement = 'top', delay = 
             ref={refs.setFloating}
             style={floatingStyles}
             {...getFloatingProps()}
-            className="tooltip-container"
+            className="z-[9999] pointer-events-none"
           >
-            <div className="tooltip-box">
+            <div className="bg-[#1a1a2e] text-white px-3 py-2 rounded-lg text-xs leading-relaxed max-w-[320px] shadow-xl border border-white/10 whitespace-pre-line">
               {content}
-              <FloatingArrow ref={arrowRef} context={context} className="tooltip-arrow" />
             </div>
           </div>
         </FloatingPortal>
