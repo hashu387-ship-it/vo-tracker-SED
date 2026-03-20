@@ -29,7 +29,7 @@ const FIELD_TOOLTIPS = {
   vo_ref: 'Variation Order reference number',
 }
 
-export default function InlineEdit({ value, field, onSave, onClick }) {
+export default function InlineEdit({ value, field, onSave, onClick, textColor }) {
   const stopProp = (e) => e.stopPropagation()
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(value)
@@ -130,6 +130,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
             className={`cursor-pointer text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/45 group relative ${
               isOverdue ? 'text-red-500 font-semibold bg-red-50/40' : ''
             }`}
+            style={!isOverdue && textColor ? { color: textColor } : undefined}
           >
             {value ? formatDateDisplay(value) : <span className="text-gray-300">—</span>}
             <Pencil size={7} className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-40 text-[#9E875D]" />

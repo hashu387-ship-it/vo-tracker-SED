@@ -453,6 +453,7 @@ export default function VariationRegister() {
                                     <InlineEdit
                                       value={v.ffc_target_date}
                                       field="ffc_target_date"
+                                      textColor="#e67e22"
                                       onSave={(field, newValue) => handleSave(v.id, field, newValue)}
                                     />
                                   </div>
@@ -462,6 +463,7 @@ export default function VariationRegister() {
                                     <InlineEdit
                                       value={v.rsg_target_date}
                                       field="rsg_target_date"
+                                      textColor="#6d4c2e"
                                       onSave={(field, newValue) => handleSave(v.id, field, newValue)}
                                     />
                                   </div>
