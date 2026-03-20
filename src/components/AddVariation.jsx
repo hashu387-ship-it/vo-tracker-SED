@@ -139,8 +139,8 @@ export default function AddVariation({ onClose, onCreated }) {
 
               {step === 1 && (
                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-4">
-                  <h4 className="text-xs font-bold text-emerald-600 uppercase tracking-wider flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  <h4 className="text-xs font-bold text-[#e67e22] uppercase tracking-wider flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#e67e22]"></div>
                     FFC Values (SAR)
                   </h4>
                   <div className="grid grid-cols-3 gap-3">
@@ -150,8 +150,8 @@ export default function AddVariation({ onClose, onCreated }) {
                       </Field>
                     ))}
                   </div>
-                  <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-2 pt-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                  <h4 className="text-xs font-bold text-[#6d4c2e] uppercase tracking-wider flex items-center gap-2 pt-2">
+                    <div className="w-3 h-3 rounded-full bg-[#6d4c2e]"></div>
                     RSG Values (SAR)
                   </h4>
                   <div className="grid grid-cols-3 gap-3">

@@ -147,15 +147,15 @@ export default function Dashboard() {
           label="FFC Summary"
           value={combinedFFC}
           icon={<TrendingUp size={16} />}
-          color="from-emerald-500 to-emerald-600"
-          accentBg="emerald"
+          color="from-[#e67e22] to-[#d35400]"
+          accentBg="orange"
           tooltip="Total FFC assessed value across all contracts"
         />
         <KPICard
           label="RSG Summary"
           value={combinedTO}
           icon={<Target size={16} />}
-          color="from-blue-500 to-blue-600"
+          color="from-[#6d4c2e] to-[#5a3e24]"
           accentBg="blue"
           tooltip="Total RSG To Summary (approved) across all contracts"
         />
@@ -163,7 +163,7 @@ export default function Dashboard() {
           label="Discrepancy"
           value={combinedFFC - combinedTO}
           icon={combinedFFC - combinedTO !== 0 ? <AlertTriangle size={16} /> : <CheckCircle2 size={16} />}
-          color={combinedFFC - combinedTO !== 0 ? 'from-orange-500 to-amber-500' : 'from-green-500 to-emerald-500'}
+          color={combinedFFC - combinedTO !== 0 ? 'from-orange-500 to-amber-500' : 'from-green-500 to-green-600'}
           accentBg="orange"
           tooltip="Difference between FFC Summary and RSG To Summary"
           highlight={combinedFFC - combinedTO !== 0}
@@ -220,7 +220,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-emerald-400 font-medium">{s.openCount} open</span>
+                  <span className="text-xs text-green-400 font-medium">{s.openCount} open</span>
                   <span className="text-gray-600">|</span>
                   <span className="text-xs text-gray-400">{s.closedCount} closed</span>
                 </div>
@@ -228,8 +228,8 @@ export default function Dashboard() {
 
               {/* Card body */}
               <div className="p-5 space-y-2.5">
-                <MetricRow label="FFC Summary" value={s.ffcTotal} dot="bg-emerald-500" bg="bg-emerald-50/50" text="text-emerald-700" />
-                <MetricRow label="RSG Summary" value={s.toTotal} dot="bg-blue-500" bg="bg-blue-50/50" text="text-blue-700" />
+                <MetricRow label="FFC Summary" value={s.ffcTotal} dot="bg-[#e67e22]" bg="bg-orange-50/50" text="text-[#d35400]" />
+                <MetricRow label="RSG Summary" value={s.toTotal} dot="bg-[#6d4c2e]" bg="bg-amber-50/50" text="text-[#6d4c2e]" />
                 {s.discrepancy !== 0 && (
                   <MetricRow label="Discrepancy" value={s.discrepancy} icon={<AlertTriangle size={11} className="text-orange-500" />} bg="bg-orange-50/50" text="text-orange-700" />
                 )}
@@ -313,8 +313,8 @@ export default function Dashboard() {
             Contract Comparison
           </h3>
           <p className="text-xs text-gray-400 mb-3">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>FFC
-            <span className="inline-block w-2 h-2 rounded-full bg-blue-500 ml-3 mr-1"></span>RSG
+            <span className="inline-block w-2 h-2 rounded-full bg-[#e67e22] mr-1"></span>FFC
+            <span className="inline-block w-2 h-2 rounded-full bg-[#6d4c2e] ml-3 mr-1"></span>RSG
             <span className="inline-block w-2 h-2 rounded-full bg-violet-500 ml-3 mr-1"></span>Approved OA
           </p>
           <ResponsiveContainer width="100%" height={300}>
@@ -337,8 +337,8 @@ export default function Dashboard() {
                   )
                 }}
               />
-              <Bar dataKey="FFC Summary" fill="#10b981" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="RSG Summary" fill="#3b82f6" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="FFC Summary" fill="#e67e22" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="RSG Summary" fill="#6d4c2e" radius={[6, 6, 0, 0]} />
               <Bar dataKey="Approved OA" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
