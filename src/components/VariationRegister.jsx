@@ -23,9 +23,9 @@ const COLUMN_GROUPS = [
     dotColor: 'bg-[#9E875D]',
     columns: [
       { key: 'no', label: '#', width: 'w-[3%]', editable: false },
-      { key: 'vo_ref', label: 'VO Ref', width: 'w-[5%]', editable: true },
-      { key: 'description', label: 'Description', width: 'w-[50%]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-[6%]', editable: true },
+      { key: 'vo_ref', label: 'VO Ref', width: 'w-[3%]', editable: true },
+      { key: 'description', label: 'Description', width: 'w-[54%]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-[5%]', editable: true },
       { key: 'action_by', label: 'Action', width: 'w-[1%]', editable: true },
     ]
   },
