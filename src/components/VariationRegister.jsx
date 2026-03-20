@@ -184,7 +184,7 @@ export default function VariationRegister() {
       </div>
 
       {/* Contract tabs */}
-      <div className="flex gap-2 no-print">
+      <div className="flex flex-col gap-2 no-print">
         {CONTRACTS.map(c => {
           const Icon = CONTRACT_ICONS[c]
           const isActive = contract === c
