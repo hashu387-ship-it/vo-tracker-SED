@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { fetchDashboardStats } from '../utils/api'
 import { formatAmountWithSAR, formatAmount, isNegative, CONTRACT_LABELS, STATUS_COLORS } from '../utils/formatters'
-import { PieChart, Pie, Cell, Tooltip as RTooltip, ResponsiveContainer, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, RadialBarChart, RadialBar } from 'recharts'
+import { PieChart, Pie, Cell, Tooltip as RTooltip, ResponsiveContainer, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts'
 import {
   TrendingUp, TrendingDown, AlertTriangle, CheckCircle2, Clock,
-  FileWarning, ArrowUpRight, ArrowDownRight, Activity, Target,
+  FileWarning, ArrowUpRight, Activity, Target,
   Building2, Landmark, Factory, CircleDot, BarChart3
 } from 'lucide-react'
 import Tooltip from './Tooltip'
@@ -18,18 +18,16 @@ const CONTRACT_ICONS = {
 
 function AnimatedNumber({ value, prefix = '', suffix = '', className = '' }) {
   const [display, setDisplay] = useState(0)
-  const ref = useRef(null)
 
   useEffect(() => {
     const target = Number(value) || 0
     const duration = 1200
     const start = performance.now()
-    const from = 0
     const animate = (time) => {
       const elapsed = time - start
       const progress = Math.min(elapsed / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
-      setDisplay(from + (target - from) * eased)
+      setDisplay(0 + (target - 0) * eased)
       if (progress < 1) requestAnimationFrame(animate)
     }
     requestAnimationFrame(animate)
@@ -58,12 +56,12 @@ export default function Dashboard() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[1,2,3,4].map(i => (
-            <div key={i} className="h-28 rounded-xl shimmer"></div>
+            <div key={i} className="h-28 rounded-2xl shimmer"></div>
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {[1,2,3].map(i => (
-            <div key={i} className="h-64 rounded-xl shimmer"></div>
+            <div key={i} className="h-64 rounded-2xl shimmer"></div>
           ))}
         </div>
       </div>
@@ -90,7 +88,6 @@ export default function Dashboard() {
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value)
 
-  // Bar chart data
   const barData = contractIds.map(cid => ({
     name: cid.split('-').pop(),
     'FFC Summary': stats[cid].ffcTotal,
@@ -98,7 +95,6 @@ export default function Dashboard() {
     'Approved OA': allVariations.filter(v => v.contract_id === cid).reduce((s, v) => s + (Number(v.approved_on_account) || 0), 0),
   }))
 
-  // Progress data
   const totalVOs = combinedOpen + combinedClosed
   const closedPct = totalVOs > 0 ? Math.round((combinedClosed / totalVOs) * 100) : 0
 
@@ -113,21 +109,23 @@ export default function Dashboard() {
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-6">
-      {/* Page header */}
+      {/* Header */}
       <motion.div variants={item} className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[#2D3436] flex items-center gap-2">
-            <Activity className="text-[#9E875D]" size={24} />
+          <h2 className="text-2xl font-bold text-[#2D3436] flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl glass flex items-center justify-center">
+              <Activity className="text-[#9E875D]" size={18} />
+            </div>
             Dashboard Overview
           </h2>
-          <p className="text-sm text-gray-400 mt-0.5">Real-time variation order tracking across all contracts</p>
+          <p className="text-sm text-gray-400 mt-0.5 ml-12">Real-time variation order tracking across all contracts</p>
         </div>
         <Tooltip content={`${combinedOpen} open, ${combinedClosed} closed — ${closedPct}% completion rate`}>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur rounded-xl px-4 py-2 border border-[#EDE6D3] shadow-sm">
-            <div className="relative w-10 h-10">
-              <svg className="w-10 h-10 -rotate-90">
-                <circle cx="20" cy="20" r="16" stroke="#EDE6D3" strokeWidth="4" fill="none" />
-                <circle cx="20" cy="20" r="16" stroke="#9E875D" strokeWidth="4" fill="none"
+          <div className="glass-heavy rounded-2xl px-4 py-2.5 flex items-center gap-3">
+            <div className="relative w-11 h-11">
+              <svg className="w-11 h-11 -rotate-90">
+                <circle cx="22" cy="22" r="17" stroke="rgba(158,135,93,0.15)" strokeWidth="4" fill="none" />
+                <circle cx="22" cy="22" r="17" stroke="#9E875D" strokeWidth="4" fill="none"
                   strokeDasharray={`${closedPct} ${100 - closedPct}`}
                   strokeLinecap="round"
                   className="transition-all duration-1000"
@@ -148,30 +146,34 @@ export default function Dashboard() {
         <KPICard
           label="FFC Summary"
           value={combinedFFC}
-          icon={<TrendingUp size={18} />}
-          color="from-emerald-500 to-emerald-700"
+          icon={<TrendingUp size={16} />}
+          color="from-emerald-500 to-emerald-600"
+          accentBg="emerald"
           tooltip="Total FFC assessed value across all contracts"
         />
         <KPICard
           label="RSG Summary"
           value={combinedTO}
-          icon={<Target size={18} />}
-          color="from-blue-500 to-blue-700"
+          icon={<Target size={16} />}
+          color="from-blue-500 to-blue-600"
+          accentBg="blue"
           tooltip="Total RSG To Summary (approved) across all contracts"
         />
         <KPICard
           label="Discrepancy"
           value={combinedFFC - combinedTO}
-          icon={combinedFFC - combinedTO !== 0 ? <AlertTriangle size={18} /> : <CheckCircle2 size={18} />}
-          color={combinedFFC - combinedTO !== 0 ? 'from-orange-500 to-orange-700' : 'from-green-500 to-green-700'}
+          icon={combinedFFC - combinedTO !== 0 ? <AlertTriangle size={16} /> : <CheckCircle2 size={16} />}
+          color={combinedFFC - combinedTO !== 0 ? 'from-orange-500 to-amber-500' : 'from-green-500 to-emerald-500'}
+          accentBg="orange"
           tooltip="Difference between FFC Summary and RSG To Summary"
           highlight={combinedFFC - combinedTO !== 0}
         />
         <KPICard
           label="Approved OA"
           value={combinedApproved}
-          icon={<CheckCircle2 size={18} />}
-          color="from-purple-500 to-purple-700"
+          icon={<CheckCircle2 size={16} />}
+          color="from-violet-500 to-purple-600"
+          accentBg="purple"
           tooltip="Total approved on account payments"
         />
         <KPICard
@@ -183,8 +185,9 @@ export default function Dashboard() {
               <span className="text-lg font-medium text-gray-400">{combinedClosed}</span>
             </div>
           }
-          icon={<CircleDot size={18} />}
-          color="from-[#9E875D] to-[#7a6844]"
+          icon={<CircleDot size={16} />}
+          color="from-[#9E875D] to-[#b8a57a]"
+          accentBg="bronze"
           tooltip={`${combinedOpen} variations still open, ${combinedClosed} closed`}
         />
       </motion.div>
@@ -203,13 +206,13 @@ export default function Dashboard() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.1, duration: 0.4 }}
-              className="glass rounded-2xl shadow-lg overflow-hidden card-hover"
+              className="glass-heavy rounded-2xl overflow-hidden card-hover"
             >
               {/* Card header */}
-              <div className="bg-gradient-to-r from-[#2D3436] to-[#3d4446] px-5 py-3 flex items-center justify-between">
+              <div className="glass-dark px-5 py-3 flex items-center justify-between rounded-t-2xl">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#9E875D]/20 flex items-center justify-center">
-                    <Icon size={16} className="text-[#9E875D]" />
+                  <div className="w-8 h-8 rounded-xl bg-[#9E875D]/15 flex items-center justify-center backdrop-blur-sm">
+                    <Icon size={15} className="text-[#c4a96a]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-white text-sm">{cid}</h3>
@@ -217,68 +220,31 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-green-400 font-medium">{s.openCount} open</span>
+                  <span className="text-xs text-emerald-400 font-medium">{s.openCount} open</span>
                   <span className="text-gray-600">|</span>
                   <span className="text-xs text-gray-400">{s.closedCount} closed</span>
                 </div>
               </div>
 
               {/* Card body */}
-              <div className="p-5 space-y-3">
-                {/* FFC row */}
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 border border-emerald-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                    <span className="text-xs font-medium text-emerald-700">FFC Summary</span>
-                  </div>
-                  <span className={`text-sm font-bold font-numbers ${isNegative(s.ffcTotal) ? 'text-red-500' : 'text-emerald-700'}`}>
-                    {formatAmount(s.ffcTotal)}
-                  </span>
-                </div>
-
-                {/* RSG row */}
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-blue-50 border border-blue-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                    <span className="text-xs font-medium text-blue-700">RSG Summary</span>
-                  </div>
-                  <span className={`text-sm font-bold font-numbers ${isNegative(s.toTotal) ? 'text-red-500' : 'text-blue-700'}`}>
-                    {formatAmount(s.toTotal)}
-                  </span>
-                </div>
-
-                {/* Discrepancy */}
+              <div className="p-5 space-y-2.5">
+                <MetricRow label="FFC Summary" value={s.ffcTotal} dot="bg-emerald-500" bg="bg-emerald-50/50" text="text-emerald-700" />
+                <MetricRow label="RSG Summary" value={s.toTotal} dot="bg-blue-500" bg="bg-blue-50/50" text="text-blue-700" />
                 {s.discrepancy !== 0 && (
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-orange-50 border border-orange-200">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle size={12} className="text-orange-500" />
-                      <span className="text-xs font-medium text-orange-700">Discrepancy</span>
-                    </div>
-                    <span className={`text-sm font-bold font-numbers ${isNegative(s.discrepancy) ? 'text-red-500' : 'text-orange-700'}`}>
-                      {formatAmount(s.discrepancy)}
-                    </span>
-                  </div>
+                  <MetricRow label="Discrepancy" value={s.discrepancy} icon={<AlertTriangle size={11} className="text-orange-500" />} bg="bg-orange-50/50" text="text-orange-700" />
                 )}
-
-                {/* Approved OA */}
                 {oa > 0 && (
-                  <div className="flex items-center justify-between p-2.5 rounded-lg bg-purple-50 border border-purple-100">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                      <span className="text-xs font-medium text-purple-700">Approved OA</span>
-                    </div>
-                    <span className="text-sm font-bold font-numbers text-purple-700">{formatAmount(oa)}</span>
-                  </div>
+                  <MetricRow label="Approved OA" value={oa} dot="bg-violet-500" bg="bg-violet-50/50" text="text-violet-700" />
                 )}
 
                 {/* Status badges */}
-                <div className="pt-2 border-t border-gray-100">
+                <div className="pt-2.5 border-t border-black/[0.04]">
                   <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">Status Breakdown</p>
                   <div className="flex flex-wrap gap-1.5">
                     {Object.entries(s.statusCounts).map(([status, count]) => (
                       <Tooltip key={status} content={`${count} variation(s) with status: ${status}`}>
                         <span
-                          className="status-badge text-[10px] px-2 py-0.5 rounded-full text-white font-medium"
+                          className="status-badge text-[10px] px-2 py-0.5 rounded-full text-white font-medium shadow-sm"
                           style={{ backgroundColor: STATUS_COLORS[status] || '#999' }}
                         >
                           {count} {status.length > 20 ? status.substring(0, 18) + '...' : status}
@@ -293,12 +259,12 @@ export default function Dashboard() {
         })}
       </motion.div>
 
-      {/* Charts row */}
+      {/* Charts */}
       <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pie Chart */}
-        <div className="glass rounded-2xl shadow-lg p-5 card-hover">
+        <div className="glass-heavy rounded-2xl p-5 card-hover">
           <h3 className="font-semibold text-[#2D3436] mb-1 flex items-center gap-2">
-            <BarChart3 size={16} className="text-[#9E875D]" />
+            <BarChart3 size={15} className="text-[#9E875D]" />
             Status Distribution
           </h3>
           <p className="text-xs text-gray-400 mb-3">All contracts combined</p>
@@ -317,7 +283,7 @@ export default function Dashboard() {
                 labelLine={{ strokeWidth: 1 }}
               >
                 {pieData.map((entry, i) => (
-                  <Cell key={i} fill={STATUS_COLORS[entry.name] || '#999'} stroke="white" strokeWidth={2} />
+                  <Cell key={i} fill={STATUS_COLORS[entry.name] || '#999'} stroke="rgba(255,255,255,0.6)" strokeWidth={2} />
                 ))}
               </Pie>
               <RTooltip
@@ -325,7 +291,7 @@ export default function Dashboard() {
                   if (!active || !payload?.length) return null
                   const { name, value } = payload[0].payload
                   return (
-                    <div className="bg-[#1a1a2e] text-white px-3 py-2 rounded-lg text-xs shadow-lg border border-white/10">
+                    <div className="glass-dark text-white px-3 py-2 rounded-xl text-xs shadow-lg">
                       <p className="font-semibold">{name}</p>
                       <p className="text-gray-300">{value} variation(s)</p>
                     </div>
@@ -341,26 +307,26 @@ export default function Dashboard() {
         </div>
 
         {/* Bar Chart */}
-        <div className="glass rounded-2xl shadow-lg p-5 card-hover">
+        <div className="glass-heavy rounded-2xl p-5 card-hover">
           <h3 className="font-semibold text-[#2D3436] mb-1 flex items-center gap-2">
-            <BarChart3 size={16} className="text-[#9E875D]" />
+            <BarChart3 size={15} className="text-[#9E875D]" />
             Contract Comparison
           </h3>
           <p className="text-xs text-gray-400 mb-3">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>FFC
             <span className="inline-block w-2 h-2 rounded-full bg-blue-500 ml-3 mr-1"></span>RSG
-            <span className="inline-block w-2 h-2 rounded-full bg-purple-500 ml-3 mr-1"></span>Approved OA
+            <span className="inline-block w-2 h-2 rounded-full bg-violet-500 ml-3 mr-1"></span>Approved OA
           </p>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={barData} barGap={4}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#EDE6D3" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(158,135,93,0.1)" />
               <XAxis dataKey="name" tick={{ fontSize: 12 }} />
               <YAxis tick={{ fontSize: 10 }} tickFormatter={v => (v / 1000000).toFixed(1) + 'M'} />
               <RTooltip
                 content={({ active, payload, label }) => {
                   if (!active || !payload?.length) return null
                   return (
-                    <div className="bg-[#1a1a2e] text-white px-3 py-2 rounded-lg text-xs shadow-lg border border-white/10">
+                    <div className="glass-dark text-white px-3 py-2 rounded-xl text-xs shadow-lg">
                       <p className="font-semibold mb-1">{label}</p>
                       {payload.map((p, i) => (
                         <p key={i} style={{ color: p.color }}>
@@ -371,9 +337,9 @@ export default function Dashboard() {
                   )
                 }}
               />
-              <Bar dataKey="FFC Summary" fill="#10b981" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="RSG Summary" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Approved OA" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="FFC Summary" fill="#10b981" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="RSG Summary" fill="#3b82f6" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="Approved OA" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -382,20 +348,20 @@ export default function Dashboard() {
       {/* Action items */}
       <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* FFC Actions */}
-        <div className="glass rounded-2xl shadow-lg overflow-hidden card-hover">
+        <div className="glass-heavy rounded-2xl overflow-hidden card-hover">
           <div className="bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-3 flex items-center justify-between">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <FileWarning size={16} />
+              <FileWarning size={15} />
               Items Needing FFC Action
             </h3>
-            <span className={`text-sm font-bold bg-white/20 px-3 py-0.5 rounded-full text-white ${ffcActions.length > 0 ? 'pulse-glow' : ''}`}>
+            <span className={`text-sm font-bold bg-white/20 backdrop-blur-sm px-3 py-0.5 rounded-full text-white ${ffcActions.length > 0 ? 'pulse-glow' : ''}`}>
               {ffcActions.length}
             </span>
           </div>
           <div className="max-h-64 overflow-y-auto p-3 space-y-1.5">
             {ffcActions.length === 0 && (
               <div className="text-center py-6">
-                <CheckCircle2 size={32} className="mx-auto text-green-300 mb-2" />
+                <CheckCircle2 size={32} className="mx-auto text-emerald-200 mb-2" />
                 <p className="text-sm text-gray-400">No pending FFC actions</p>
               </div>
             )}
@@ -405,9 +371,9 @@ export default function Dashboard() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex gap-3 items-start p-2.5 rounded-lg hover:bg-orange-50 transition-colors group"
+                className="flex gap-3 items-start p-2.5 rounded-xl hover:bg-orange-50/50 transition-colors group"
               >
-                <span className="text-[10px] text-orange-500 font-bold bg-orange-100 px-1.5 py-0.5 rounded mt-0.5">#{v.no}</span>
+                <span className="text-[10px] text-orange-500 font-bold bg-orange-100/70 px-1.5 py-0.5 rounded-lg mt-0.5">#{v.no}</span>
                 <div className="flex-1 min-w-0">
                   <Tooltip content={`${v.description}\n\nContract: ${v.contract_id}\nAction By: ${v.action_by}`}>
                     <p className="text-xs text-gray-700 truncate">{v.description}</p>
@@ -427,20 +393,20 @@ export default function Dashboard() {
         </div>
 
         {/* Overdue Items */}
-        <div className="glass rounded-2xl shadow-lg overflow-hidden card-hover">
+        <div className="glass-heavy rounded-2xl overflow-hidden card-hover">
           <div className="bg-gradient-to-r from-red-500 to-rose-500 px-5 py-3 flex items-center justify-between">
             <h3 className="font-semibold text-white flex items-center gap-2">
-              <Clock size={16} />
+              <Clock size={15} />
               Overdue Items
             </h3>
-            <span className={`text-sm font-bold bg-white/20 px-3 py-0.5 rounded-full text-white ${overdue.length > 0 ? 'pulse-glow' : ''}`}>
+            <span className={`text-sm font-bold bg-white/20 backdrop-blur-sm px-3 py-0.5 rounded-full text-white ${overdue.length > 0 ? 'pulse-glow' : ''}`}>
               {overdue.length}
             </span>
           </div>
           <div className="max-h-64 overflow-y-auto p-3 space-y-1.5">
             {overdue.length === 0 && (
               <div className="text-center py-6">
-                <CheckCircle2 size={32} className="mx-auto text-green-300 mb-2" />
+                <CheckCircle2 size={32} className="mx-auto text-emerald-200 mb-2" />
                 <p className="text-sm text-gray-400">No overdue items</p>
               </div>
             )}
@@ -453,9 +419,9 @@ export default function Dashboard() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="flex gap-3 items-start p-2.5 rounded-lg hover:bg-red-50 transition-colors group"
+                  className="flex gap-3 items-start p-2.5 rounded-xl hover:bg-red-50/50 transition-colors group"
                 >
-                  <span className="text-[10px] text-red-500 font-bold bg-red-100 px-1.5 py-0.5 rounded mt-0.5">#{v.no}</span>
+                  <span className="text-[10px] text-red-500 font-bold bg-red-100/70 px-1.5 py-0.5 rounded-lg mt-0.5">#{v.no}</span>
                   <div className="flex-1 min-w-0">
                     <Tooltip content={`${v.description}\n\nDue: ${dueDate}\n${daysOverdue} days overdue`}>
                       <p className="text-xs text-gray-700 truncate">{v.description}</p>
@@ -476,16 +442,30 @@ export default function Dashboard() {
   )
 }
 
-function KPICard({ label, value, customValue, icon, color, tooltip, highlight }) {
+function MetricRow({ label, value, dot, icon, bg, text }) {
+  return (
+    <div className={`flex items-center justify-between p-2.5 rounded-xl ${bg} border border-white/50`}>
+      <div className="flex items-center gap-2">
+        {icon || <div className={`w-2 h-2 rounded-full ${dot}`}></div>}
+        <span className={`text-xs font-medium ${text}`}>{label}</span>
+      </div>
+      <span className={`text-sm font-bold font-numbers ${isNegative(value) ? 'text-red-500' : text}`}>
+        {formatAmount(value)}
+      </span>
+    </div>
+  )
+}
+
+function KPICard({ label, value, customValue, icon, color, accentBg, tooltip, highlight }) {
   return (
     <Tooltip content={tooltip}>
       <motion.div
         whileHover={{ scale: 1.02, y: -2 }}
-        className={`glass rounded-xl shadow-lg overflow-hidden ${highlight ? 'ring-2 ring-orange-400 ring-offset-2' : ''}`}
+        className={`glass-heavy rounded-2xl overflow-hidden ${highlight ? 'ring-2 ring-orange-300/50 ring-offset-2 ring-offset-transparent' : ''}`}
       >
         <div className={`bg-gradient-to-r ${color} px-4 py-2 flex items-center gap-2`}>
           <span className="text-white/80">{icon}</span>
-          <span className="text-xs text-white/90 font-medium">{label}</span>
+          <span className="text-[11px] text-white/90 font-medium">{label}</span>
         </div>
         <div className="px-4 py-3">
           {customValue || (

@@ -50,7 +50,7 @@ export default function Tooltip({ children, content, placement = 'top', delay = 
             {...getFloatingProps()}
             className="z-[9999] pointer-events-none"
           >
-            <div className="bg-[#1a1a2e] text-white px-3 py-2 rounded-lg text-xs leading-relaxed max-w-[320px] shadow-xl border border-white/10 whitespace-pre-line">
+            <div className="glass-dark text-white px-3 py-2 rounded-xl text-xs leading-relaxed max-w-[320px] whitespace-pre-line">
               {content}
             </div>
           </div>
