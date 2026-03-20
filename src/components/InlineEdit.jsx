@@ -92,7 +92,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         <Tooltip content={tooltip}>
           <div
             onClick={(e) => { stopProp(e); setEditing(true) }}
-            className={`cursor-pointer text-right font-numbers text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
+            className={`cursor-pointer text-right font-numbers text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/45 group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
           >
             {formatAmount(value)}
             <Pencil size={7} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
@@ -102,15 +102,15 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
     }
     if (field === 'action_by') {
       const colors = {
-        'FFC': 'bg-emerald-100 text-emerald-700 border-emerald-200',
-        'RSG': 'bg-blue-100 text-blue-700 border-blue-200',
-        'RSG/FFC': 'bg-purple-100 text-purple-700 border-purple-200',
+        'FFC': 'bg-emerald-100/70 text-emerald-700 border-emerald-200/50',
+        'RSG': 'bg-blue-100/70 text-blue-700 border-blue-200/50',
+        'RSG/FFC': 'bg-violet-100/70 text-violet-700 border-violet-200/50',
       }
       return (
         <Tooltip content={tooltip}>
           <div onClick={(e) => { stopProp(e); setEditing(true) }} className="cursor-pointer group relative">
             {value ? (
-              <span className={`inline-block text-[9px] px-1.5 py-0 rounded font-semibold border ${colors[value] || 'bg-gray-100 text-gray-500 border-gray-200'}`}>
+              <span className={`inline-block text-[9px] px-1.5 py-0.5 rounded-lg font-semibold border backdrop-blur-sm ${colors[value] || 'bg-gray-100/70 text-gray-500 border-gray-200/50'}`}>
                 {value}
               </span>
             ) : (
@@ -127,8 +127,8 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         <Tooltip content={`${tooltip}${isOverdue ? '\n⚠️ OVERDUE' : ''}`}>
           <div
             onClick={(e) => { stopProp(e); setEditing(true) }}
-            className={`cursor-pointer text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative ${
-              isOverdue ? 'text-red-500 font-semibold bg-red-50/50' : ''
+            className={`cursor-pointer text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/45 group relative ${
+              isOverdue ? 'text-red-500 font-semibold bg-red-50/40' : ''
             }`}
           >
             {value ? formatDateDisplay(value) : <span className="text-gray-300">—</span>}
@@ -143,7 +143,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
       <Tooltip content={value ? `${tooltip}\n\n${value}` : tooltip}>
         <div
           onClick={(e) => { stopProp(e); setEditing(true) }}
-          className={`cursor-pointer text-[10px] px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative overflow-hidden`}
+          className="cursor-pointer text-[10px] px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/45 group relative overflow-hidden"
         >
           <span className={isDescription ? 'line-clamp-2 text-[11px] leading-tight font-medium text-gray-800' : 'truncate block leading-tight'}>{value || <span className="text-gray-300">—</span>}</span>
           <Pencil size={9} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
@@ -175,9 +175,9 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         ) : (field === 'ffc_remarks' || field === 'rsg_remarks') ? (
           <div>
             <textarea ref={inputRef} value={editValue || ''} onChange={e => setEditValue(e.target.value)} onKeyDown={e => { if (e.key === 'Escape') handleCancel() }} className="inline-edit-input text-[10px] min-h-[60px] resize-y" rows={2} />
-            <div className="flex justify-end gap-1 mt-0.5">
-              <button onClick={handleCancel} className="p-0.5 rounded bg-gray-100 hover:bg-gray-200"><X size={10} /></button>
-              <button onClick={handleSave} className="p-0.5 rounded bg-[#9E875D] text-white hover:bg-[#8a7650]"><Check size={10} /></button>
+            <div className="flex justify-end gap-1 mt-1">
+              <button onClick={handleCancel} className="p-1 rounded-lg glass-btn text-gray-400 hover:text-gray-600"><X size={10} /></button>
+              <button onClick={handleSave} className="p-1 rounded-lg glass-btn-primary"><Check size={10} /></button>
             </div>
           </div>
         ) : (
@@ -187,7 +187,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-white/70 flex items-center justify-center rounded"
+            className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center rounded-xl"
           >
             <div className="w-4 h-4 border-2 border-[#9E875D] border-t-transparent rounded-full animate-spin"></div>
           </motion.div>
