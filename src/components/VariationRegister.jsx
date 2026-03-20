@@ -449,7 +449,7 @@ export default function VariationRegister() {
                                 /* Combined FFC / RSG Target Dates */
                                 <div className="flex flex-col" onClick={(e) => e.stopPropagation()}>
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-[7px] text-[#e67e22] uppercase font-semibold leading-none">F</span>
+                                    <span className="text-[7px] text-[#e67e22] uppercase font-semibold leading-none">FFC</span>
                                     <InlineEdit
                                       value={v.ffc_target_date}
                                       field="ffc_target_date"
@@ -458,7 +458,7 @@ export default function VariationRegister() {
                                   </div>
                                   <div className="border-t border-dashed border-white/40"></div>
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-[7px] text-[#6d4c2e] uppercase font-semibold leading-none">R</span>
+                                    <span className="text-[7px] text-[#6d4c2e] uppercase font-semibold leading-none">RSG</span>
                                     <InlineEdit
                                       value={v.rsg_target_date}
                                       field="rsg_target_date"
