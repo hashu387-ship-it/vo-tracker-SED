@@ -24,9 +24,9 @@ const COLUMN_GROUPS = [
     columns: [
       { key: 'no', label: '#', width: 'w-[3%]', editable: false },
       { key: 'vo_ref', label: 'VO Ref', width: 'w-[5%]', editable: true },
-      { key: 'description', label: 'Description', width: 'w-[34%]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-[8%]', editable: true },
-      { key: 'action_by', label: 'Action', width: 'w-[3%]', editable: true },
+      { key: 'description', label: 'Description', width: 'w-[38%]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-[6%]', editable: true },
+      { key: 'action_by', label: 'Action', width: 'w-[2%]', editable: true },
     ]
   },
   {
