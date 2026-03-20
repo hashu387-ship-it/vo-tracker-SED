@@ -92,7 +92,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         <Tooltip content={tooltip}>
           <div
             onClick={(e) => { stopProp(e); setEditing(true) }}
-            className={`cursor-pointer text-right font-numbers text-[10px] whitespace-nowrap px-1 py-0 rounded transition-all hover:bg-white hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
+            className={`cursor-pointer text-right font-numbers text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative ${neg ? 'text-red-600 font-semibold' : 'text-gray-700'}`}
           >
             {formatAmount(value)}
             <Pencil size={7} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
@@ -127,8 +127,8 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
         <Tooltip content={`${tooltip}${isOverdue ? '\n⚠️ OVERDUE' : ''}`}>
           <div
             onClick={(e) => { stopProp(e); setEditing(true) }}
-            className={`cursor-pointer text-[10px] whitespace-nowrap px-1 py-0 rounded transition-all hover:bg-white hover:shadow-sm group relative ${
-              isOverdue ? 'text-red-500 font-semibold bg-red-50' : ''
+            className={`cursor-pointer text-[10px] whitespace-nowrap px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative ${
+              isOverdue ? 'text-red-500 font-semibold bg-red-50/50' : ''
             }`}
           >
             {value ? formatDateDisplay(value) : <span className="text-gray-300">—</span>}
@@ -143,7 +143,7 @@ export default function InlineEdit({ value, field, onSave, onClick }) {
       <Tooltip content={value ? `${tooltip}\n\n${value}` : tooltip}>
         <div
           onClick={(e) => { stopProp(e); setEditing(true) }}
-          className={`cursor-pointer text-[10px] px-1 py-0 rounded transition-all hover:bg-white hover:shadow-sm group relative overflow-hidden`}
+          className={`cursor-pointer text-[10px] px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/50 hover:shadow-sm group relative overflow-hidden`}
         >
           <span className={isDescription ? 'line-clamp-2 text-[11px] leading-tight font-medium text-gray-800' : 'truncate block leading-tight'}>{value || <span className="text-gray-300">—</span>}</span>
           <Pencil size={9} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
