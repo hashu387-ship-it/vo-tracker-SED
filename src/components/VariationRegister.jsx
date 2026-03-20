@@ -406,7 +406,7 @@ export default function VariationRegister() {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: idx * 0.01, duration: 0.3 }}
                               onClick={() => setExpandedRow(isExpanded ? null : v.id)}
-                              className={`table-row-hover cursor-pointer ${isExpanded ? 'row-expanded' : ''} ${v.is_closed ? 'opacity-50' : ''} ${idx % 2 === 0 ? 'row-even' : 'row-odd'}`}
+                              className={`table-row-hover cursor-pointer ${isExpanded ? 'row-expanded' : ''} ${v.is_closed ? 'opacity-50' : ''} `}
                               style={{ backgroundColor: getStatusRowBg(v.rsg_status) }}
                               onMouseEnter={() => setHoveredRow(v)}
                               onMouseMove={(e) => setTooltipPos({ x: e.clientX, y: e.clientY })}
@@ -418,7 +418,7 @@ export default function VariationRegister() {
                                 else if (rsgCols.has(col.key)) cellBg = 'cell-rsg'
 
                                 return (
-                                  <td key={col.key} className={`px-2 py-1.5 border-b border-gray-200/60 whitespace-nowrap ${col.amount ? 'text-right' : ''} ${cellBg}`}>
+                                  <td key={col.key} className={`px-2 py-1.5 whitespace-nowrap ${col.amount ? 'text-right' : ''} ${cellBg}`}>
                                     {col.combined ? (
                                       /* Combined Initial / Revised */
                                       <div className="flex flex-col text-right" onClick={(e) => e.stopPropagation()}>
