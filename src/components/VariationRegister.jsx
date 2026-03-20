@@ -24,8 +24,8 @@ const COLUMN_GROUPS = [
     columns: [
       { key: 'no', label: '#', width: 'w-[3%]', editable: false },
       { key: 'vo_ref', label: 'VO Ref', width: 'w-[5%]', editable: true },
-      { key: 'description', label: 'Description', width: 'w-[30%]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-[9%]', editable: true },
+      { key: 'description', label: 'Description', width: 'w-[34%]', editable: true },
+      { key: 'rsg_status', label: 'Status', width: 'w-[8%]', editable: true },
       { key: 'action_by', label: 'Action', width: 'w-[3%]', editable: true },
     ]
   },
@@ -33,17 +33,17 @@ const COLUMN_GROUPS = [
     id: 'ffc',
     label: 'FFC Values',
     color: 'col-group-ffc',
-    dotColor: 'bg-emerald-500',
+    dotColor: 'bg-[#e67e22]',
     columns: [
-      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-[9%]', combined: true, editable: false },
-      { key: 'ffc_summary', label: 'Summary', width: 'w-[8%]', amount: true, editable: true },
+      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-[8%]', combined: true, editable: false },
+      { key: 'ffc_summary', label: 'Summary', width: 'w-[7%]', amount: true, editable: true },
     ]
   },
   {
     id: 'rsg',
     label: 'RSG Values',
     color: 'col-group-rsg',
-    dotColor: 'bg-blue-500',
+    dotColor: 'bg-[#6d4c2e]',
     columns: [
       { key: 'rsg_assessment', label: 'Assess.', width: 'w-[8%]', amount: true, editable: true },
       { key: 'to_summary', label: 'To Sum', width: 'w-[8%]', amount: true, editable: true },
@@ -437,7 +437,7 @@ export default function VariationRegister() {
                                   </div>
                                   <div className="border-t border-dashed border-white/40"></div>
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-[7px] text-emerald-500 uppercase font-semibold leading-none">R</span>
+                                    <span className="text-[7px] text-[#e67e22] uppercase font-semibold leading-none">R</span>
                                     <InlineEdit
                                       value={v.ffc_revised_submission}
                                       field="ffc_revised_submission"
@@ -449,7 +449,7 @@ export default function VariationRegister() {
                                 /* Combined FFC / RSG Target Dates */
                                 <div className="flex flex-col" onClick={(e) => e.stopPropagation()}>
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-[7px] text-emerald-500 uppercase font-semibold leading-none">F</span>
+                                    <span className="text-[7px] text-[#e67e22] uppercase font-semibold leading-none">F</span>
                                     <InlineEdit
                                       value={v.ffc_target_date}
                                       field="ffc_target_date"
@@ -458,7 +458,7 @@ export default function VariationRegister() {
                                   </div>
                                   <div className="border-t border-dashed border-white/40"></div>
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-[7px] text-blue-500 uppercase font-semibold leading-none">R</span>
+                                    <span className="text-[7px] text-[#6d4c2e] uppercase font-semibold leading-none">R</span>
                                     <InlineEdit
                                       value={v.rsg_target_date}
                                       field="rsg_target_date"
@@ -526,13 +526,13 @@ export default function VariationRegister() {
                                       <InfoRow label="Closed" value={v.is_closed ? 'Yes' : 'No'} />
                                     </div>
                                     <div className="expanded-card">
-                                      <h4 className="expanded-card-title text-emerald-600">FFC Values</h4>
+                                      <h4 className="expanded-card-title text-[#e67e22]">FFC Values</h4>
                                       <InfoRow label="Revised" value={`SAR ${formatAmount(v.ffc_revised_submission)}`} neg={isNegative(v.ffc_revised_submission)} />
                                       <InfoRow label="Initial" value={`SAR ${formatAmount(v.ffc_initial_submission)}`} neg={isNegative(v.ffc_initial_submission)} />
                                       <InfoRow label="Summary" value={`SAR ${formatAmount(v.ffc_summary)}`} neg={isNegative(v.ffc_summary)} />
                                     </div>
                                     <div className="expanded-card">
-                                      <h4 className="expanded-card-title text-blue-600">RSG Values</h4>
+                                      <h4 className="expanded-card-title text-[#6d4c2e]">RSG Values</h4>
                                       <InfoRow label="Assessment" value={`SAR ${formatAmount(v.rsg_assessment)}`} neg={isNegative(v.rsg_assessment)} />
                                       <InfoRow label="To Summary" value={`SAR ${formatAmount(v.to_summary)}`} neg={isNegative(v.to_summary)} />
                                       <InfoRow label="Approved OA" value={`SAR ${formatAmount(v.approved_on_account)}`} neg={isNegative(v.approved_on_account)} />
@@ -541,11 +541,11 @@ export default function VariationRegister() {
                                       <h4 className="expanded-card-title text-gray-500">Remarks</h4>
                                       <div className="space-y-2">
                                         <div className="text-xs">
-                                          <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>FFC:</span>
+                                          <span className="inline-flex items-center gap-1 text-[#e67e22] font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-[#e67e22]"></span>FFC:</span>
                                           <InlineEdit value={v.ffc_remarks} field="ffc_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
                                         </div>
                                         <div className="text-xs">
-                                          <span className="inline-flex items-center gap-1 text-blue-600 font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>RSG:</span>
+                                          <span className="inline-flex items-center gap-1 text-[#6d4c2e] font-semibold mb-1"><span className="w-1.5 h-1.5 rounded-full bg-[#6d4c2e]"></span>RSG:</span>
                                           <InlineEdit value={v.rsg_remarks} field="rsg_remarks" onSave={(field, newValue) => handleSave(v.id, field, newValue)} />
                                         </div>
                                       </div>
@@ -587,7 +587,7 @@ export default function VariationRegister() {
                             </div>
                             <div className="border-t border-dashed border-[#9E875D]/15"></div>
                             <div className="flex items-center justify-between">
-                              <span className="text-[7px] text-emerald-600 font-semibold">R</span>
+                              <span className="text-[7px] text-[#e67e22] font-semibold">R</span>
                               <span className={`font-black text-[10px] ${isNegative(totals.ffc_revised_submission) ? 'text-red-600' : 'text-[#2D3436]'}`}>
                                 {formatAmount(totals.ffc_revised_submission)}
                               </span>
@@ -628,15 +628,15 @@ export default function VariationRegister() {
               </p>
               {hoveredRow.ffc_remarks && (
                 <div>
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5 align-middle"></span>
-                  <span className="text-emerald-400 font-semibold">FFC:</span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#e67e22] mr-1.5 align-middle"></span>
+                  <span className="text-[#e67e22] font-semibold">FFC:</span>
                   <p className="text-gray-300 mt-0.5 pl-3.5">{hoveredRow.ffc_remarks}</p>
                 </div>
               )}
               {hoveredRow.rsg_remarks && (
                 <div>
-                  <span className="inline-block w-2 h-2 rounded-full bg-blue-400 mr-1.5 align-middle"></span>
-                  <span className="text-blue-400 font-semibold">RSG:</span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#a0764e] mr-1.5 align-middle"></span>
+                  <span className="text-[#a0764e] font-semibold">RSG:</span>
                   <p className="text-gray-300 mt-0.5 pl-3.5">{hoveredRow.rsg_remarks}</p>
                 </div>
               )}

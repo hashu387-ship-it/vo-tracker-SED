@@ -278,8 +278,8 @@ body {
 }
 
 /* Cell tints */
-.cell-ffc { background: rgba(16, 185, 129, 0.03); }
-.cell-rsg { background: rgba(59, 130, 246, 0.03); }
+.cell-ffc { background: rgba(230, 126, 34, 0.04); }
+.cell-rsg { background: rgba(109, 76, 46, 0.04); }
 
 /* Zebra */
 .row-even { background-color: rgba(255, 255, 255, 0.1); }
@@ -354,14 +354,14 @@ body {
 
 /* Column group headers */
 .col-group-ffc {
-  background: rgba(16, 185, 129, 0.08);
+  background: rgba(230, 126, 34, 0.08);
   backdrop-filter: blur(8px);
-  border-bottom: 2px solid rgba(16, 185, 129, 0.35);
+  border-bottom: 2px solid rgba(230, 126, 34, 0.45);
 }
 .col-group-rsg {
-  background: rgba(59, 130, 246, 0.08);
+  background: rgba(109, 76, 46, 0.08);
   backdrop-filter: blur(8px);
-  border-bottom: 2px solid rgba(59, 130, 246, 0.35);
+  border-bottom: 2px solid rgba(109, 76, 46, 0.4);
 }
 .col-group-general {
   background: rgba(158, 135, 93, 0.06);

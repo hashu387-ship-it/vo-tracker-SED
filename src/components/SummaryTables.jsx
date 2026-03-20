@@ -76,7 +76,7 @@ export default function SummaryTables() {
                 onClick={() => setType('ffc')}
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl transition-all duration-300 ${
                   type === 'ffc'
-                    ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-[#e67e22] to-[#d35400] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
@@ -88,7 +88,7 @@ export default function SummaryTables() {
                 onClick={() => setType('rsg')}
                 className={`flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl transition-all duration-300 ${
                   type === 'rsg'
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-[#6d4c2e] to-[#5a3e24] text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
@@ -210,15 +210,15 @@ export default function SummaryTables() {
             <thead>
               <tr className="glass-dark">
                 <th className="px-5 py-3 text-left text-[10px] font-bold text-gray-300 uppercase tracking-wider">Contract</th>
-                <th className="px-5 py-3 text-right text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                <th className="px-5 py-3 text-right text-[10px] font-bold text-[#e67e22] uppercase tracking-wider">
                   <div className="flex items-center justify-end gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#e67e22]"></div>
                     FFC Summary
                   </div>
                 </th>
-                <th className="px-5 py-3 text-right text-[10px] font-bold text-blue-400 uppercase tracking-wider">
+                <th className="px-5 py-3 text-right text-[10px] font-bold text-[#a0764e] uppercase tracking-wider">
                   <div className="flex items-center justify-end gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#6d4c2e]"></div>
                     RSG To Summary
                   </div>
                 </th>
@@ -250,10 +250,10 @@ export default function SummaryTables() {
                       <span className="text-xs text-gray-400 ml-2">{CONTRACT_LABELS[cid]}</span>
                     </td>
                     <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(ffc) ? 'text-red-500 font-bold' : ''}`}>
-                      <span className="bg-emerald-50/50 px-2.5 py-1 rounded-xl">{formatAmount(ffc)}</span>
+                      <span className="bg-orange-50/50 px-2.5 py-1 rounded-xl">{formatAmount(ffc)}</span>
                     </td>
                     <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(to) ? 'text-red-500 font-bold' : ''}`}>
-                      <span className="bg-blue-50/50 px-2.5 py-1 rounded-xl">{formatAmount(to)}</span>
+                      <span className="bg-amber-50/50 px-2.5 py-1 rounded-xl">{formatAmount(to)}</span>
                     </td>
                     <td className="px-5 py-4 text-right font-numbers text-sm font-bold">
                       {disc !== 0 ? (
@@ -261,7 +261,7 @@ export default function SummaryTables() {
                           {formatAmount(disc)}
                         </span>
                       ) : (
-                        <span className="text-emerald-500 bg-emerald-50/50 px-3 py-1 rounded-xl">0.00</span>
+                        <span className="text-green-500 bg-green-50/50 px-3 py-1 rounded-xl">0.00</span>
                       )}
                     </td>
                     <td className="px-5 py-4 text-center">
@@ -280,7 +280,7 @@ export default function SummaryTables() {
                     <>
                       <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(ffc) ? 'text-red-500' : ''}`}>{formatAmount(ffc)}</td>
                       <td className={`px-5 py-4 text-right font-numbers text-sm ${isNegative(to) ? 'text-red-500' : ''}`}>{formatAmount(to)}</td>
-                      <td className={`px-5 py-4 text-right font-numbers text-sm ${disc !== 0 ? 'text-orange-700' : 'text-emerald-600'}`}>{formatAmount(disc)}</td>
+                      <td className={`px-5 py-4 text-right font-numbers text-sm ${disc !== 0 ? 'text-orange-700' : 'text-green-600'}`}>{formatAmount(disc)}</td>
                     </>
                   )
                 })()}
