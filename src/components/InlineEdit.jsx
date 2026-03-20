@@ -146,7 +146,7 @@ export default function InlineEdit({ value, field, onSave, onClick, textColor })
           onClick={(e) => { stopProp(e); setEditing(true) }}
           className="cursor-pointer text-[10px] px-1.5 py-0.5 rounded-lg transition-all hover:bg-white/45 group relative overflow-hidden"
         >
-          <span className={isDescription ? 'line-clamp-2 text-[11px] leading-tight font-medium text-gray-800' : 'truncate block leading-tight'}>{value || <span className="text-gray-300">—</span>}</span>
+          <span className={isDescription ? 'whitespace-nowrap text-[11px] leading-tight font-medium text-gray-800' : 'truncate block leading-tight'}>{value || <span className="text-gray-300">—</span>}</span>
           <Pencil size={9} className="absolute top-0.5 right-0.5 opacity-0 group-hover:opacity-40 text-[#9E875D]" />
         </div>
       </Tooltip>

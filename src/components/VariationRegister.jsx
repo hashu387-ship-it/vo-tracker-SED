@@ -22,11 +22,11 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'no', label: '#', width: 'w-[3%]', editable: false },
-      { key: 'vo_ref', label: 'VO Ref', width: 'w-[3%]', editable: true },
-      { key: 'description', label: 'Description', width: 'w-[54%]', editable: true },
-      { key: 'rsg_status', label: 'Status', width: 'w-[5%]', editable: true },
-      { key: 'action_by', label: 'Action', width: 'w-[1%]', editable: true },
+      { key: 'no', label: '#', editable: false },
+      { key: 'vo_ref', label: 'VO Ref', editable: true },
+      { key: 'description', label: 'Description', editable: true },
+      { key: 'rsg_status', label: 'Status', editable: true },
+      { key: 'action_by', label: 'Action', editable: true },
     ]
   },
   {
@@ -35,8 +35,8 @@ const COLUMN_GROUPS = [
     color: 'col-group-ffc',
     dotColor: 'bg-[#e67e22]',
     columns: [
-      { key: 'ffc_submission', label: 'Init / Rev', width: 'w-[8%]', combined: true, editable: false },
-      { key: 'ffc_summary', label: 'Summary', width: 'w-[7%]', amount: true, editable: true },
+      { key: 'ffc_submission', label: 'Init / Rev', combined: true, editable: false },
+      { key: 'ffc_summary', label: 'Summary', amount: true, editable: true },
     ]
   },
   {
@@ -45,9 +45,9 @@ const COLUMN_GROUPS = [
     color: 'col-group-rsg',
     dotColor: 'bg-[#6d4c2e]',
     columns: [
-      { key: 'rsg_assessment', label: 'Assess.', width: 'w-[8%]', amount: true, editable: true },
-      { key: 'to_summary', label: 'To Sum', width: 'w-[8%]', amount: true, editable: true },
-      { key: 'approved_on_account', label: 'Appr. OA', width: 'w-[8%]', amount: true, editable: true },
+      { key: 'rsg_assessment', label: 'Assess.', amount: true, editable: true },
+      { key: 'to_summary', label: 'To Sum', amount: true, editable: true },
+      { key: 'approved_on_account', label: 'Appr. OA', amount: true, editable: true },
     ]
   },
   {
@@ -56,8 +56,8 @@ const COLUMN_GROUPS = [
     color: 'col-group-general',
     dotColor: 'bg-[#9E875D]',
     columns: [
-      { key: 'target_dates', label: 'FFC / RSG', width: 'w-[7%]', combinedDate: true, editable: false },
-      { key: 'substantiated_docs', label: 'Docs', width: 'w-[5%]', editable: true },
+      { key: 'target_dates', label: 'FFC / RSG', combinedDate: true, editable: false },
+      { key: 'substantiated_docs', label: 'Docs', editable: true },
     ]
   },
 ]
@@ -329,7 +329,7 @@ export default function VariationRegister() {
             {/* Table */}
             <div className="table-wrapper">
               <div className="overflow-auto max-h-[70vh] relative z-[1]">
-                <table className="w-full text-[11px] table-3d border-separate border-spacing-0 table-fixed">
+                <table className="w-full text-[11px] table-3d border-separate border-spacing-0">
                   <thead className="sticky top-0 z-30">
                     {/* Group headers */}
                     <tr>
@@ -355,7 +355,7 @@ export default function VariationRegister() {
                         <th
                           key={col.key}
                           onClick={() => !col.combined && !col.combinedDate && handleSort(col.key)}
-                          className={`px-2 py-2 text-left text-[9px] font-bold uppercase tracking-wider select-none whitespace-nowrap transition-all duration-200 hover:bg-white/30 ${col.amount || col.combined || col.combinedDate ? 'text-right' : ''} ${col.combined || col.combinedDate ? '' : 'cursor-pointer'} ${col.width}`}
+                          className={`px-2 py-2 text-left text-[9px] font-bold uppercase tracking-wider select-none whitespace-nowrap transition-all duration-200 hover:bg-white/30 ${col.amount || col.combined || col.combinedDate ? 'text-right' : ''} ${col.combined || col.combinedDate ? '' : 'cursor-pointer'}`}
                         >
                           <div className={`flex items-center gap-1 ${col.amount || col.combined || col.combinedDate ? 'justify-end' : ''}`}>
                             {col.label}
@@ -418,7 +418,7 @@ export default function VariationRegister() {
                                 else if (rsgCols.has(col.key)) cellBg = 'cell-rsg'
 
                                 return (
-                                  <td key={col.key} className={`px-2 py-0.5 ${col.amount ? 'text-right' : ''} ${cellBg}`}>
+                                  <td key={col.key} className={`px-2 py-1.5 border-b border-gray-200/60 whitespace-nowrap ${col.amount ? 'text-right' : ''} ${cellBg}`}>
                                     {col.combined ? (
                                       /* Combined Initial / Revised */
                                       <div className="flex flex-col text-right" onClick={(e) => e.stopPropagation()}>
